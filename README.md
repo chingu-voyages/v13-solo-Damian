@@ -21,6 +21,14 @@ Then just run:
 ```bash
 npm install
 ```
+## Running app
+
+```bash
+npm run dev-server
+```
+```bash
+npm start
+```
 
 ## API DOC
 

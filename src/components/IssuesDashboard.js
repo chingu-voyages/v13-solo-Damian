@@ -45,7 +45,7 @@ class IssuesDashboard extends Component {
               className='table table-bordered'
               id='issuesTable'
               width='100%'
-              cellspacing='0'
+              cellSpacing='0'
             >
               <thead>
                 <tr>
@@ -59,7 +59,7 @@ class IssuesDashboard extends Component {
               </thead>
 
               <tbody>
-                {issues.map(issue => <Issue issue={issue} />)}
+                {issues.map(issue => <Issue key={issue._id} issue={issue} />)}
               </tbody>
             </table>
           </div>

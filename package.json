@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./issue-tracker-server/server.js",
-    "dev-server": "nodemon ./issue-tracker-server/server.js",
-    "ui-start": "react-scripts start",
+    "server": "nodemon ./issue-tracker-server/server.js",
+    "ui": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

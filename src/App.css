@@ -1,6 +1,16 @@
 .App {
   text-align: center;
 }
+.list-group-item{
+  border:0 !important;
+}
+#sidebar-wrapper{
+  height: 100vh;
+}
+
+.sidebar-icon{
+  font-size:24px; 
+}
 
 .App-logo {
   height: 40vmin;

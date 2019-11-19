@@ -1,39 +1,14 @@
 import React, { Component } from 'react'
 import Issue from './Issue'
+import { connect } from 'react-redux'
+
 class IssuesDashboard extends Component {
+  componentDidMount () {}
   render () {
-    const issues = [
-      {
-        created_on: '2019-10-26T06:48:41.967Z',
-        updated_on: '2019-10-26T06:48:41.967Z',
-        priority: 1,
-        open: false,
-        _id: '5db3ec4e1b65214174c71e81',
-        issue_title: 'Title',
-        issue_text: 'text',
-        created_by: 'Functional Test - Every field filled in',
-        assigned_to: 'Chai and Mocha',
-        status_text: 'In QA',
-        project: 'test',
-        __v: 0
-      },
-      {
-        created_on: '2019-10-26T06:49:05.441Z',
-        updated_on: '2019-10-26T06:49:05.441Z',
-        priority: 1,
-        open: true,
-        _id: '5db3ec6525a23b9198602c37',
-        issue_title: 'Title',
-        issue_text: 'text',
-        created_by: 'Functional Test - Every field filled in',
-        assigned_to: 'Chai and Mocha',
-        status_text: 'In QA',
-        project: 'test',
-        __v: 0
-      }
-    ]
-    const project = 'TEST'
+    const issues = this.props.issues
+    const project = 'TEST' // TODO hardcoded data
     return (
+      issues &&
       <div className='card mb-3'>
         <div className='card-header'>
           <i className='fa fa-table' />
@@ -59,7 +34,7 @@ class IssuesDashboard extends Component {
               </thead>
 
               <tbody>
-                {issues.map(issue => <Issue key={issue._id} issue={issue} />)}
+                {Object.keys(issues).map(i => <Issue key={i} issue={issues[i]} />)}
               </tbody>
             </table>
           </div>
@@ -69,4 +44,10 @@ class IssuesDashboard extends Component {
   }
 }
 
-export default IssuesDashboard
+function mapStateToProps (issues) {
+  return {
+    issues
+  }
+}
+
+export default connect(mapStateToProps)(IssuesDashboard)

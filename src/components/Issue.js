@@ -7,6 +7,7 @@ class Issue extends Component {
 
   render() {
     const issue = this.props.issue;
+    console.log(JSON.stringify(this.props))
     // if (this.state.redirect) {
     //   return (
     //     <Redirect
@@ -16,6 +17,7 @@ class Issue extends Component {
     //     />
     //   );
     // }
+    // TODO pass id from Issues list component, then get issue component from store by id?
     return (
       <tr>
         <td>

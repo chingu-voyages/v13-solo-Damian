@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import IssueSearch from './components/IssueSearch'
 import IssuesDashboard from './components/IssuesDashboard'
+import CreateIssue from './components/CreateIssue'
 
 function App () {
   return (
@@ -13,8 +14,9 @@ function App () {
         <Sidebar />
         <div id='page-content-wrapper'>
           <div className='container-fluid'>
-            <IssueSearch />
-            <IssuesDashboard />
+            {/* <IssueSearch /> */}
+            {/* <IssuesDashboard /> */}
+            <CreateIssue/>
           </div>
         </div>
       </div>

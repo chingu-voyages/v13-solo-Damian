@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <title>Issue Tracker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../src/App.css" >
+</head>
+<body>
+    <div class="container">
+        <form>
+               
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">Project</label>
+                  <select class="form-control" id="projectSelect" value="Test Project">
+                    <option value="test">Test Project</option>
+              
+                  </select>
+                </div>
+
+                <div class="form-group">
+                        <label for="titleIssue">Title</label>
+                        <input type="text" class="form-control" id="titleIssue" placeholder="">
+                      </div>
+
+                <div class="form-group">
+                  <label for="prioritySelect">Priority</label>
+                  <select  class="form-control" id="prioritySelect" >
+                    <option value="critical">Critical</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="descriptionTextArea">Description</label>
+                  <textarea class="form-control" id="descriptionTextArea" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                        <label for="statusSelect">Status</label>
+                        <select  class="form-control" id="statusSelect">
+                          <option value="new">New</option>
+                          <option value="inprogress">In Progress</option>
+              
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                            <label for="assignSelect">Assign</label>
+                            <select  class="form-control" id="assignSelect">
+                              <option value="damian">Damian</option>
+                              <option>2</option>
+                              <option>3</option>
+                              <option>4</option>
+                              <option>5</option>
+                            </select>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Create</button>
+
+              </form>
+            </div>
+</body>
+</html>

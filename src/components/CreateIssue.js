@@ -33,6 +33,8 @@ class CreateIssue extends Component {
 
   render() {
     return (
+      <div>
+        <p className="h2 ml-3 my-2">Create Issue</p>
       <form className="issue-form mt-1" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label for="exampleFormControlSelect1">Project</label>
@@ -120,6 +122,7 @@ class CreateIssue extends Component {
           Create
         </button>
       </form>
+      </div>
     );
   }
 }

@@ -11,8 +11,8 @@ class IssuesDashboard extends Component {
       issues &&
       <div className='card mb-3'>
         <div className='card-header'>
-          <i className='fa fa-table' />
-          Issues Logged in project : {project}
+          <i className='fa fa-table' /> <span className="h6"> Issues Logged in project </span>
+          <span className="h5">{project} </span>
         </div>
         <div className='card-body'>
           <div className='table-responsive'>

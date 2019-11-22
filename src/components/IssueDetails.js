@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import api from '../helper/API'
 TimeAgo.addLocale(en)
 const timeAgo = new TimeAgo('en-US')
 

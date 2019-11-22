@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-TimeAgo.addLocale(en)
-const timeAgo = new TimeAgo('en-US')
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+import { Link } from "react-router-dom";
 
- class Issue extends Component {
+TimeAgo.addLocale(en);
+const timeAgo = new TimeAgo("en-US");
+
+class Issue extends Component {
   state = {
     redirect: false,
   };
@@ -14,7 +16,9 @@ const timeAgo = new TimeAgo('en-US')
     return (
       <tr>
         <td>
-          {issue._id}
+          <Link to={`/details/${issue._id}`}>
+            {issue._id}
+          </Link>
         </td>
         <td>
           {issue.priority}
@@ -36,4 +40,4 @@ const timeAgo = new TimeAgo('en-US')
   }
 }
 
-export default Issue
+export default Issue;

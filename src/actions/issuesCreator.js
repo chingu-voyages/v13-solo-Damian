@@ -1,17 +1,11 @@
 import { addIssue, receiveIssues, updateIssue } from './issues'
-
-const BASE_URL = 'http://localhost:3030/issues'
+import api from '../helper/API'
+// const BASE_URL = 'http://localhost:3030/issues'
 export function handleAddIssue (issue) {
+  console.log(">> handleAddIssue" + JSON.stringify(issue))
   return (dispatch, getState) => {
-    fetch(`${BASE_URL}/${issue.project}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(issue)
-    })
-      .then(response => response.json())
+    api
+      .createPost(issue)
       .then(data => dispatch(addIssue(data)))
       .catch(error => console.log(JSON.stringify(error)))
   }
@@ -19,15 +13,8 @@ export function handleAddIssue (issue) {
 
 export function handleReceiveIssues (project) {
   return (dispatch, getState) => {
-    fetch(`${BASE_URL}/${project}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json'
-      }
-    })
-      .then(response => {
-        return response.json()
-      })
+    api
+      .getPosts(project)
       .then(data => dispatch(receiveIssues(data)))
       .catch(error => console.log(JSON.stringify(error)))
   }

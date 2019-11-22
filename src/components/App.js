@@ -8,6 +8,7 @@ import CreateIssue from './CreateIssue'
 import { connect } from 'react-redux'
 import { handleReceiveIssues } from '../actions/issuesCreator'
 import { Route } from 'react-router-dom'
+import IssueDetails from './IssueDetails'
 
 class App extends Component {
   componentDidMount () {
@@ -30,7 +31,8 @@ class App extends Component {
                     <IssuesDashboard />
                   </div>}
               />
-              <Route path='/create' render={() => <CreateIssue />} />
+              <Route path='/create' component={CreateIssue} />
+              <Route path='/details/:id' component={IssueDetails} />
             </div>
           </div>
         </div>

@@ -1,3 +1,31 @@
+.issue-view{
+  height: 100vh;
+  width: 90%;
+  margin:auto;
+  /* background-color: azure; */
+}
+.details-label{
+  display: inline-block;
+  width: 100px;
+}
+
+#issue-details-main{
+height: calc(100vh - 100px);
+position: relative;
+
+}
+
+#issue-details-add-comment{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.issue-view-icon{
+  font-size:24px;
+}
+
+
 #page-content-wrapper{ 
   width: 100%;
 }

@@ -10,7 +10,7 @@ router
       .then(result => res.json(result))
       .catch(error => next(error))
   })
-  .get('/:project/:id', (req, res, next) => {
+  .get('/details/:id', (req, res, next) => {
     Issue.findById(req.params.id)
       .then(result => res.json(result))
       .catch(error => next(error))

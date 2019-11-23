@@ -1,9 +1,6 @@
-
-
 const BASE_URL=process.env.REACT_APP_API_URL;
 const api = {
   getPosts (project) {
-      console.log(">>"  + `${BASE_URL}/${project}`);
     return fetch(`${BASE_URL}/${project}`, {
       method: 'GET',
       headers: {

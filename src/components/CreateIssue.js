@@ -16,8 +16,8 @@ class CreateIssue extends Component {
       issue_title: "",
       project: "test",
       issue_text: "",
-      created_by: "Damian",
-      assigned_to: "Damian",
+      created_by: this.props.user.username,
+      assigned_to: this.props.user.username,
       priority: 1,
       status_text: "New",
     });
@@ -118,9 +118,9 @@ class CreateIssue extends Component {
   }
 }
 
-function mapStateToProps(issues) {
+function mapStateToProps({ user }) {
   return {
-    issues,
+    user,
   };
 }
 export default connect(mapStateToProps)(CreateIssue);

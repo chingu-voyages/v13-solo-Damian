@@ -107,7 +107,7 @@ class IssueDetails extends Component {
   }
 }
 
-function mapStateToProps (issues) {
+function mapStateToProps ({issues}) {
   return {
     issues
   }

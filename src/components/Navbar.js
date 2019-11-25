@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { handleLogout } from '../actions/userActionsCreator'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class Navbar extends Component {
   render () {
-    const user = { username: 'Damian' }
+    const { user } = this.props
     return (
       <nav className='navbar navbar-expand-sm navbar-light bg-light'>
         <button
@@ -31,7 +32,7 @@ class Navbar extends Component {
                 aria-haspopup='true'
                 aria-expanded='false'
               >
-                {user.username}
+                {user.username|| user.email || "Unknown"}
               </a>
               <div
                 className='dropdown-menu dropdown-menu-right'
@@ -40,7 +41,7 @@ class Navbar extends Component {
                 <Link
                   className='dropdown-item'
                   to='/login'
-                  onClick={handleLogout}
+                  onClick={() => handleLogout(user)}
                 >
                   Logout
                 </Link>
@@ -55,4 +56,10 @@ class Navbar extends Component {
     )
   }
 }
-export default Navbar
+
+function mapStateToProps ({ user }) {
+  return {
+    user
+  }
+}
+export default connect(mapStateToProps)(Navbar)

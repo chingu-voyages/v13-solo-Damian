@@ -1,10 +1,11 @@
-const BASE_URL=process.env.REACT_APP_API_URL;
+const BASE_URL = process.env.REACT_APP_API_URL
 const api = {
-  getPosts (project) {
+  getPosts (project, token) {
     return fetch(`${BASE_URL}/${project}`, {
       method: 'GET',
       headers: {
-        Accept: 'application/json'
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
       }
     }).then(response => response.json())
   },

@@ -1,16 +1,21 @@
-// import {login, logout } from './users'
-// import api from '../helper/API'
-
-export function handleLogout () {
+import {signOut, logIn} from './users'
+import auth from '../helper/AUTH'
+import {handleReceiveIssues} from './issueActionsCreator'
+export function handleLogout (user) {
   return dispatch => {
-    // dispatch(signOut())
-    // logout()
+    auth.logout(user.email).then(user => dispatch(signOut(user)))
   }
 }
 
-export function handleLogin (username) {
+export function handleLogin (user) {
   return dispatch => {
-    // dispatch(setAuthedUser(username))
+    auth.login(user).then(data => {
+      dispatch(logIn({...user, ...data}))
+      dispatch(handleReceiveIssues( user)) 
+    }
+      )
+
     // login(username)
+    // dispatch(logIn(username))
   }
 }

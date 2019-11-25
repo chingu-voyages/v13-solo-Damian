@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import Issue from './Issue'
 import { connect } from 'react-redux'
-
 class IssuesDashboard extends Component {
-  componentDidMount () {}
+
   render () {
-    const issues = this.props.issues
-    const project = 'TEST' // TODO hardcoded data
+    const {issues, user } = this.props
+    const project = user ? (user.defaultProject || 'TEST') : "Unknown"// TODO hardcoded data
     return (
       issues &&
       <div className='card mb-3'>
         <div className='card-header'>
-          <i className='fa fa-table' /> <span className="h6"> Issues Logged in project </span>
-          <span className="h5">{project} </span>
+          <i className='fa fa-table' />
+          <span className='h6'> Issues Logged in project </span>
+          <span className='h5'>{project} </span>
         </div>
         <div className='card-body'>
           <div className='table-responsive'>
@@ -34,7 +34,9 @@ class IssuesDashboard extends Component {
               </thead>
 
               <tbody>
-                {Object.keys(issues).map(i => <Issue key={i} issue={issues[i]} />)}
+                {Object.keys(issues).map(i =>
+                  <Issue key={i} issue={issues[i]} />
+                )}
               </tbody>
             </table>
           </div>
@@ -44,9 +46,10 @@ class IssuesDashboard extends Component {
   }
 }
 
-function mapStateToProps (issues) {
+function mapStateToProps ({ issues, user }) {
   return {
-    issues
+    issues,
+    user
   }
 }
 

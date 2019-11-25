@@ -11,10 +11,10 @@ export function handleAddIssue (issue) {
   }
 }
 
-export function handleReceiveIssues (project) {
+export function handleReceiveIssues (user) {
   return (dispatch, getState) => {
     api
-      .getPosts(project)
+      .getPosts(user.defaultProject || 'test', user.accessToken)
       .then(data => dispatch(receiveIssues(data)))
       .catch(error => console.log(JSON.stringify(error)))
   }

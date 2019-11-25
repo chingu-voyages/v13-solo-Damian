@@ -6,7 +6,7 @@ import IssueSearch from './IssueSearch'
 import IssuesDashboard from './IssuesDashboard'
 import CreateIssue from './CreateIssue'
 import { connect } from 'react-redux'
-import { handleReceiveIssues } from '../actions/issueActionsCreator'
+// import { handleReceiveIssues } from '../actions/issueActionsCrseator'
 import {
   BrowserRouter as Router,
   Route,
@@ -19,7 +19,6 @@ import Login from './Login'
 
 class App extends Component {
   componentDidMount () {
-    this.props.dispatch(handleReceiveIssues('test'))
   }
   render () {
     return (

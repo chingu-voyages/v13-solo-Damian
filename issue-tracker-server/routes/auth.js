@@ -6,7 +6,7 @@ const { createAccessToken, createRefreshToken } = require('../utils/tokens')
 const REFRESH_TOKEN_COOKIE = 'dupa1234'
 const Users = require('../models/user')
 const REFRESH_TOKEN_PATH = '/auth/refresh_token'
-
+const isAuth = require('../utils/authChecker')
 router
   .get('/', async (req, res, next) => {
     res.send({ ok: 'ok' })
@@ -65,7 +65,7 @@ router
       }
     } catch (error) {
       res.status(401).send({ error: error.message })
-    }
+    }  
   })
   .post('/refresh_token', async (req, res) => {
     const token = req.cookies[REFRESH_TOKEN_COOKIE]
@@ -92,14 +92,6 @@ router
     sendRefreshToken(res, refreshToken)
     sendAccessToken(req, res, accessToken)
   })
-
-const isAuth = req => {
-  const authorization = req.headers['authorization']
-  if (!authorization) throw new Error('You need to login')
-  const token = authorization.split(' ')[1]
-  const { userId } = verify(token, process.env.ACCES_TOKEN_SECRET)
-  return userId
-}
 
 const sendAccessToken = (req, res, accessToken) => {
   res.json({

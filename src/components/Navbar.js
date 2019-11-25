@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { handleLogout } from '../actions/userActionsCreator'
+import { Link } from 'react-router-dom'
 
 class Navbar extends Component {
   render () {
+    const user = { username: 'Damian' }
     return (
       <nav className='navbar navbar-expand-sm navbar-light bg-light'>
         <button
@@ -28,18 +31,22 @@ class Navbar extends Component {
                 aria-haspopup='true'
                 aria-expanded='false'
               >
-                User
+                {user.username}
               </a>
               <div
                 className='dropdown-menu dropdown-menu-right'
                 aria-labelledby='navbarDropdown'
               >
-                <a className='dropdown-item' href='#'>
+                <Link
+                  className='dropdown-item'
+                  to='/login'
+                  onClick={handleLogout}
+                >
                   Logout
-                </a>
-                <a className='dropdown-item' href='#'>
+                </Link>
+                <Link className='dropdown-item' to='/'>
                   Profile
-                </a>
+                </Link>
               </div>
             </li>
           </ul>

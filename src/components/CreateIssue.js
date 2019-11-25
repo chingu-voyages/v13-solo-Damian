@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { handleAddIssue } from "../actions/issuesCreator";
+import { handleAddIssue } from "../actions/issueActionsCreator";
 import { connect } from "react-redux";
 
 class CreateIssue extends Component {
@@ -23,7 +23,7 @@ class CreateIssue extends Component {
     });
   }
 
-  handleAnswerChange = e => {
+  handleOnChange = e => {
     this.setState({ [e.target.name]: e.target.value });
     console.log("FORM STATE CHANGED: " + JSON.stringify(this.state));
   };
@@ -46,7 +46,7 @@ class CreateIssue extends Component {
               className="form-control"
               id="projectSelect"
               value={this.state.project}
-              onChange={this.handleAnswerChange}
+              onChange={this.handleOnChange}
               name="project"
             />
           </div>
@@ -59,7 +59,7 @@ class CreateIssue extends Component {
               id="titleIssue"
               value={this.state.issue_title}
               name="issue_title"
-              onChange={this.handleAnswerChange}
+              onChange={this.handleOnChange}
               required
             />
           </div>
@@ -71,7 +71,7 @@ class CreateIssue extends Component {
               id="prioritySelect"
               value={this.state.priority}
               defaultValue={this.state.priority}
-              onChange={this.handleAnswerChange}
+              onChange={this.handleOnChange}
               name="priority"
               type="number"
             />
@@ -83,7 +83,7 @@ class CreateIssue extends Component {
               id="descriptionTextArea"
               rows="3"
               value={this.state.issue_text}
-              onChange={this.handleAnswerChange}
+              onChange={this.handleOnChange}
               name="issue_text"
               required
             />
@@ -94,7 +94,7 @@ class CreateIssue extends Component {
               className="form-control"
               id="statusSelect"
               value={this.state.status_text}
-              onChange={this.handleAnswerChange}
+              onChange={this.handleOnChange}
               name="status_text"
             />
           </div>
@@ -105,7 +105,7 @@ class CreateIssue extends Component {
               className="form-control"
               id="assignSelect"
               value={this.state.assigned_to}
-              onChange={this.handleAnswerChange}
+              onChange={this.handleOnChange}
               name="assigned_to"
             />
           </div>

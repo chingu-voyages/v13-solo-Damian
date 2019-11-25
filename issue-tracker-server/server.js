@@ -23,7 +23,6 @@ app.use('/', indexRouter)
 app.use('/issues', issuesRouter)
 app.use('/auth', authRouter)
 
-
 app.use(function (err, req, res, next) {
   res.status(err.status || 400)
   return res.send(err.message)

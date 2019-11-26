@@ -1,23 +1,36 @@
 import React, { Component } from "react";
 import { handleAddIssue } from "../actions/issueActionsCreator";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 class CreateIssue extends Component {
   state = {
     issue_title: "",
     issue_text: "",
-    created_by: "Damian",
+    created_by: "",
     assigned_to: "",
-    status_text: "New",
+    status_text: "",
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      nextProps.assigned_to !== prevState.assigned_to &&
+      nextProps.created_by !== prevState.created_by
+    ) {
+      return {
+        assigned_to: nextProps.assigned_to,
+        created_by: nextProps.created_by,
+      };
+    }
+  }
 
   componentDidMount() {
     this.setState({
       issue_title: "",
       project: "test",
       issue_text: "",
-      created_by: this.props.user.username,
-      assigned_to: this.props.user.username,
+      created_by: "Unknown",
+      assigned_to: "Unknown",
       priority: 1,
       status_text: "New",
     });
@@ -30,18 +43,24 @@ class CreateIssue extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(JSON.stringify({ ...this.state }));
-    this.props.dispatch(handleAddIssue({ ...this.state }));
+    console.log(JSON.stringify("handleSubmit " + { ...this.state }));
+    this.props.dispatch(handleAddIssue({ ...this.state }, this.props.user));
     this.props.history.push("/");
   };
 
   render() {
+    const { redirect } = this.props;
+
+    if (redirect) {
+      return <Redirect to="/login" />;
+    }
+
     return (
       <div>
         <p className="h2 ml-3 my-2">Create Issue</p>
         <form className="issue-form mt-1" onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label for="exampleFormControlSelect1">Project</label>
+            <label htmlFor="projectSelect">Project</label>
             <input
               className="form-control"
               id="projectSelect"
@@ -52,7 +71,7 @@ class CreateIssue extends Component {
           </div>
 
           <div className="form-group">
-            <label for="titleIssue">Title</label>
+            <label htmlFor="titleIssue">Title</label>
             <input
               type="text"
               className="form-control"
@@ -65,7 +84,7 @@ class CreateIssue extends Component {
           </div>
 
           <div className="form-group">
-            <label for="prioritySelect">Priority</label>
+            <label htmlFor="prioritySelect">Priority</label>
             <input
               className="form-control"
               id="prioritySelect"
@@ -77,7 +96,7 @@ class CreateIssue extends Component {
             />
           </div>
           <div className="form-group">
-            <label for="descriptionTextArea">Description</label>
+            <label htmlFor="descriptionTextArea">Description</label>
             <textarea
               className="form-control"
               id="descriptionTextArea"
@@ -89,7 +108,7 @@ class CreateIssue extends Component {
             />
           </div>
           <div className="form-group">
-            <label for="statusSelect">Status</label>
+            <label htmlFor="statusSelect">Status</label>
             <input
               className="form-control"
               id="statusSelect"
@@ -100,7 +119,7 @@ class CreateIssue extends Component {
           </div>
 
           <div className="form-group">
-            <label for="assignSelect">Assign</label>
+            <label htmlFor="assignSelect">Assign</label>
             <input
               className="form-control"
               id="assignSelect"
@@ -119,8 +138,19 @@ class CreateIssue extends Component {
 }
 
 function mapStateToProps({ user }) {
+  console.log("mapStateToProps " + JSON.stringify(user));
+  // const {user} = state
+
+  const created_by = user.email;
+  const assigned_to = user.email;
+  const redirect = (user && user.accessToken && !user.error) !== true;
+  console.log("mapStateToProps: redirect? " + redirect);
+
   return {
+    redirect,
     user,
+    created_by,
+    assigned_to,
   };
 }
 export default connect(mapStateToProps)(CreateIssue);

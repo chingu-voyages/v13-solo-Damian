@@ -22,14 +22,14 @@ const api = {
       }).then(response => response.json())
   },
   
-  logout (issue) {
-    return fetch(`${BASE_URL}/${issue.project}`, {
+  logout (user) {
+    return fetch(`${BASE_URL}/logout`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(issue)
+      body: JSON.stringify({email : user.email})
     }).then(response => response.json())
   }
 

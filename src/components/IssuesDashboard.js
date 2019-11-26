@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
 import Issue from './Issue'
 import { connect } from 'react-redux'
+import { Redirect } from "react-router-dom";
+
 class IssuesDashboard extends Component {
 
   render () {
     const {issues, user } = this.props
     const project = user ? (user.defaultProject || 'TEST') : "Unknown"// TODO hardcoded data
+    const { redirect } = this.props;
+
+    if (redirect) {
+      return <Redirect to="/login" />;
+    }
     return (
       issues &&
       <div className='card mb-3'>
@@ -47,7 +54,10 @@ class IssuesDashboard extends Component {
 }
 
 function mapStateToProps ({ issues, user }) {
+  const redirect = (user && user.accessToken && !user.error) !== true;
+
   return {
+    redirect,
     issues,
     user
   }

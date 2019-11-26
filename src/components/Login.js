@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {handleLogin} from "../actions/userActionsCreator"
+import { handleLogin } from "../actions/userActionsCreator";
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
   state = {
@@ -11,18 +12,23 @@ class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
     console.log(JSON.stringify({ ...this.state }));
-    this.props.dispatch(handleLogin({ ...this.state }))
+    this.props.dispatch(handleLogin({ ...this.state }));
     this.setState({
       email: "",
       password: "",
     });
-    this.props.history.push("/");
   };
+
   handleOnChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
+    const { redirect } = this.props;
+
+    if (redirect) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="container">
         <div className="wrap-login">
@@ -65,9 +71,11 @@ class Login extends Component {
     );
   }
 }
-function mapStateToProps(issues) {
+function mapStateToProps({ user }) {
+  const redirect = (user && user.accessToken && !user.error) === true;
+  console.log("mapStateToProps: " + redirect);
   return {
-    issues,
+    redirect
   };
 }
 export default connect(mapStateToProps)(Login);

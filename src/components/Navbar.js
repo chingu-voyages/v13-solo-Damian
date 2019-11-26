@@ -4,6 +4,13 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 class Navbar extends Component {
+
+
+  logout = () => {
+    const { user } = this.props
+    if (user && user.email)
+    this.props.dispatch(handleLogout(user))
+  }
   render () {
     const { user } = this.props
     return (
@@ -41,7 +48,7 @@ class Navbar extends Component {
                 <Link
                   className='dropdown-item'
                   to='/login'
-                  onClick={() => handleLogout(user)}
+                  onClick={this.logout}
                 >
                   Logout
                 </Link>

@@ -1,30 +1,32 @@
 const BASE_URL = process.env.REACT_APP_API_URL
+
+const headers = token => {
+  return {
+    Accept: 'application/json',
+    Authorization: `Bearer ${token}`
+  }
+}
 const api = {
   getPosts (project, token) {
     return fetch(`${BASE_URL}/${project}`, {
       method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`
-      }
+      headers: headers(token)
     }).then(response => response.json())
   },
 
-  getPostsByRef (ref) {
+  getPostsByRef (ref, token) {
     return fetch(`${BASE_URL}/details/${ref}`, {
       method: 'GET',
-      headers: {
-        Accept: 'application/json'
-      }
+      headers: headers(token)
     }).then(response => response.json())
   },
 
-  createPost (issue) {
+  createPost (issue, token) {
     return fetch(`${BASE_URL}/${issue.project}`, {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
+        ...headers(token),
+        ...{ 'Content-Type': 'application/json' }
       },
       body: JSON.stringify(issue)
     }).then(response => response.json())

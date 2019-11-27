@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import { Redirect } from "react-router-dom";
+
 TimeAgo.addLocale(en)
 const timeAgo = new TimeAgo('en-US')
 
@@ -23,6 +25,12 @@ class IssueDetails extends Component {
     }
     const issue = this.props.issues[id] ? this.props.issues[id] : dummyData
     console.log("ISSUE >> " + JSON.stringify(issue))
+
+    const { redirect } = this.props;
+
+    if (redirect) {
+      return <Redirect to="/login" />;
+    }
     return (
       <div className='issue-view'>
         <div className='row'>
@@ -107,9 +115,12 @@ class IssueDetails extends Component {
   }
 }
 
-function mapStateToProps ({issues}) {
+function mapStateToProps ({issues, user}) {
+  const redirect = !(user && user.accessToken);
+
   return {
-    issues
+    issues,
+    redirect
   }
 }
 export default connect(mapStateToProps)(IssueDetails)

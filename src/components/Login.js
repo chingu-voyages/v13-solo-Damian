@@ -72,8 +72,8 @@ class Login extends Component {
   }
 }
 function mapStateToProps({ user }) {
-  const redirect = (user && user.accessToken && !user.error) === true;
-  console.log("mapStateToProps: " + redirect);
+  const redirect = user && user.accessToken
+  console.log("LOGIN-mapStateToProps: " + redirect);
   return {
     redirect
   };

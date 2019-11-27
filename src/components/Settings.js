@@ -39,20 +39,19 @@ class Settings extends Component {
   }
 
   render() {
-    const { availableProjects, defaultProject } = this.props.user;
-
-    const options = availableProjects.map(project => ({
-      value: project,
-      label: project,
-    }));
-    if (!options.includes(defaultProject)) {
-      options.push(defaultProject);
-    }
     const { redirect } = this.props;
-
     if (redirect) {
       return <Redirect to="/login" />;
     }
+    const { availableProjects } = this.props.user;
+
+    const options = availableProjects
+      ? availableProjects.map(project => ({
+          value: project,
+          label: project,
+        }))
+      : [];
+
     return (
       <div>
         <p className="h2 ml-3 my-2">Settings</p>
@@ -71,13 +70,6 @@ class Settings extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="defaultProject">Default Project</label>
-            {/* <select
-              className="form-control"
-              id="defaultProject"
-              defaultValue={this.state.defaultProject}
-              value={this.state.defaultProject}
-              onChange={this.handleOnChange}
-            /> */}
             <Select
               value={this.state.defaultProject}
               onChange={this.handleSelectChange}
@@ -119,7 +111,7 @@ class Settings extends Component {
 function mapStateToProps({ user }) {
   console.log("mapStateToProps " + JSON.stringify(user));
 
-  const redirect = (user && user.accessToken && !user.error) !== true;
+  const redirect = !(user && user.accessToken);
   console.log("mapStateToProps: redirect? " + redirect);
 
   return {

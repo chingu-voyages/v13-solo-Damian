@@ -143,8 +143,8 @@ function mapStateToProps({ user }) {
 
   const created_by = user.email;
   const assigned_to = user.email;
-  const redirect = (user && user.accessToken && !user.error) !== true;
-  console.log("mapStateToProps: redirect? " + redirect);
+  const redirect = !(user && user.accessToken);
+  console.log("CreateIssue-mapStateToProps-redirect? " + redirect);
 
   return {
     redirect,

@@ -31,6 +31,14 @@ function handleGetUserDetails (user) {
       .catch(error => console.log(error))
   }
 }
+export function handleRegister (user) {
+  return dispatch => {
+    api
+      .register(user)
+      .then(() => dispatch(update(user)))
+      .catch(error => console.log(error))
+  }
+}
 
 export function handleLogin (user) {
   return dispatch => {

@@ -7,6 +7,12 @@ const headers = token => {
   }
 }
 const api = {
+  getProjects (token) {
+    return fetch(`${BASE_URL}/projects`, {
+      method: 'GET',
+      headers: headers(token)
+    }).then(response => response.json())
+  },
   getPosts (project, token) {
     return fetch(`${BASE_URL}/${project}`, {
       method: 'GET',

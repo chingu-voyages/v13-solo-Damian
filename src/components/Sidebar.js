@@ -18,12 +18,12 @@ class Sidebar extends Component {
           >
             <i className='fa fa-plus-square sidebar-icon' />
           </Link>
-          <a
-            href='#'
+          <Link
             className='list-group-item list-group-item-action bg-light'
+            to='/settings'
           >
             <i className='fa fa-gear sidebar-icon' />
-          </a>
+          </Link>
         </div>
       </div>
     )

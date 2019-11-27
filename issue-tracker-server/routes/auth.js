@@ -22,6 +22,39 @@ router
     new Users({ email, password: hashedPassword }).save()
     res.json({ message: 'user created' })
   })
+  .post('/update-user', async (req, res, next) => {
+    const { email, password, displayName, defaultProject } = req.body
+    try {
+      const user = await Users.findOne({ email })
+      if (!user) {
+        throw new Error('user not found')
+      }
+      const isValid = await compare(password, user.password)
+      if (!isValid) throw new Error('invalid Password')
+      user.displayName = displayName
+      user.defaultProject = defaultProject
+      user
+        .save()
+        .then(data => {
+          console.log(JSON.stringify(data))
+          return res.send({ message: 'user updated' })
+        })
+        .catch(error => res.status(400).json({ error: error }))
+    } catch (err) {
+      res.status(400).send({ error: `${err.message}` })
+    }
+  })
+  .get('/user/:email', async (req, res, next) => {
+    const { email } = req.params
+    console.log("email: " + email)
+    const user = await Users.findOne({ email })
+    console.log('USER: ' + JSON.stringify(user)) // TODO remove later
+    if (! user) {
+      return res.status(400).json({ error: 'User not exist' })
+    } // TODO only for debugging! REMOVE sending whole user with password in resp
+    const { defaultProject, displayName } = user
+    res.json({ defaultProject, displayName })
+  })
   .post('/login', async (req, res, next) => {
     const { email, password } = req.body
     try {
@@ -65,7 +98,7 @@ router
       }
     } catch (error) {
       res.status(401).send({ error: error.message })
-    }  
+    }
   })
   .post('/refresh_token', async (req, res) => {
     const token = req.cookies[REFRESH_TOKEN_COOKIE]

@@ -3,6 +3,12 @@ const router = express.Router()
 const Issue = require('../models/issue')
 
 router
+  .get('/projects', (req, res, next) => {
+    Issue.find()
+      .distinct('project')
+      .then(result => res.json(result))
+      .catch(error => next(error))
+  })
   .get('/:project', (req, res, next) => {
     const project = req.params.project
     const filter = { ...req.query, project }

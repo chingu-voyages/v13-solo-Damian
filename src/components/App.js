@@ -7,19 +7,13 @@ import IssuesDashboard from './IssuesDashboard'
 import CreateIssue from './CreateIssue'
 import { connect } from 'react-redux'
 // import { handleReceiveIssues } from '../actions/issueActionsCrseator'
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import IssueDetails from './IssueDetails'
 import Registration from './Registration'
 import Login from './Login'
+import Settings from './Settings'
 
 class App extends Component {
-  componentDidMount () {
-  }
   render () {
     return (
       <Router>
@@ -35,7 +29,7 @@ class App extends Component {
 const NoNavContainer = () =>
   <div className='App'>
     <div className='container'>
-      <Route exact path='/' render={() => <Redirect to='/login' />} />
+      {/* <Route exact path='/' render={() => <Redirect to='/login' />} /> */}
       <Route path='/login' component={Login} />
       <Route path='/register' component={Registration} />
     </div>
@@ -60,6 +54,7 @@ const DefaultContainer = () =>
             />
             <Route path='/create' component={CreateIssue} />
             <Route path='/details/:id' component={IssueDetails} />
+            <Route path='/settings' component={Settings} />
           </div>
         </div>
       </div>

@@ -1,21 +1,44 @@
-import {signOut, logIn} from './users'
-import auth from '../helper/AUTH'
-import {handleReceiveIssues} from './issueActionsCreator'
-
-
+import { signOut, logIn, update } from './users'
+import api from '../helper/UserAPI'
+import {
+  handleReceiveIssues,
+  handleRetrieveAvailableProjects
+} from './issueActionsCreator'
 
 export function handleLogout (user) {
   return dispatch => {
-    auth.logout(user.email).then(user => dispatch(signOut(user))).catch(error => console.log(error))
+    api
+      .logout(user.email)
+      .then(user => dispatch(signOut(user)))
+      .catch(error => console.log(error))
+  }
+}
+
+export function handleUpdate (user) {
+  return dispatch => {
+    api
+      .update(user)
+      .then(() => dispatch(update(user)))
+      .catch(error => console.log(error))
+  }
+}
+
+function handleGetUserDetails (user) {
+  return dispatch => {
+    api
+      .getUserDetails(user.email)
+      .then(user => dispatch(update(user)))
+      .catch(error => console.log(error))
   }
 }
 
 export function handleLogin (user) {
   return dispatch => {
-    auth.login(user).then(data => {
-      dispatch(logIn({...user, ...data}))
-      dispatch(handleReceiveIssues( user)) 
-    }
-      )
+    api.login(user).then(data => {
+      dispatch(logIn({ ...user, ...data }))
+      dispatch(handleGetUserDetails(user))
+      dispatch(handleRetrieveAvailableProjects(user))
+      dispatch(handleReceiveIssues(user))
+    })
   }
 }

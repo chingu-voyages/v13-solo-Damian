@@ -1,15 +1,25 @@
-import { addIssue, receiveIssues, updateIssue } from './issues'
-import api from '../helper/API'
-// const BASE_URL = 'http://localhost:3030/issues'
-export function handleAddIssue (issue, user) {
-  console.log('>> handleAddIssue' + JSON.stringify(issue))
-  console.log('>> handleAddIssue' + JSON.stringify(user))
+import { addIssue, receiveIssues } from './issues'
+import { update } from './users'
+import api from '../helper/IssuesAPI'
 
+export function handleAddIssue (issue, user) {
   return (dispatch, getState) => {
     api
       .createPost(issue, user.accessToken)
       .then(data => dispatch(addIssue(data)))
       .catch(error => console.log(JSON.stringify(error)))
+  }
+}
+
+export function handleRetrieveAvailableProjects (user) {
+  return dispatch => {
+    api
+      .getProjects(user.accessToken)
+      .then(projects => {
+        user.availableProjects = projects
+        dispatch(update(user))
+      })
+      .catch(error => console.log(error))
   }
 }
 

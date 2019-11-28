@@ -5,7 +5,7 @@ import api from '../helper/IssuesAPI'
 export function handleAddIssue (issue, user) {
   return (dispatch, getState) => {
     api
-      .createPost(issue, user.accessToken)
+      .createIssue(issue, user.accessToken)
       .then(data => dispatch(addIssue(data)))
       .catch(error => console.log(JSON.stringify(error)))
   }
@@ -26,7 +26,7 @@ export function handleRetrieveAvailableProjects (user) {
 export function handleReceiveIssues (user) {
   return (dispatch, getState) => {
     api
-      .getPosts(user.defaultProject || 'test', user.accessToken)
+      .getIssues(user.defaultProject || 'test', user.accessToken)
       .then(data => dispatch(receiveIssues(data)))
       .catch(error => console.log(JSON.stringify(error)))
   }

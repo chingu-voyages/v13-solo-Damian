@@ -24,9 +24,10 @@ height: calc(100vh - 100px);
 position: relative;
 
 }
-
+#issue-content{
+  height: 85vh;
+}
 #issue-details-add-comment{
-  position: absolute;
   bottom: 0;
   left: 0;
 }

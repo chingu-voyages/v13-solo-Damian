@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
-// import Issue from './Issue'
+import Comment from './Comment'
 import { connect } from 'react-redux'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import { Redirect } from "react-router-dom";
-
+import { Redirect } from 'react-router-dom'
+import { handleReceiveComments } from '../actions/commentActionsCreator'
 TimeAgo.addLocale(en)
 const timeAgo = new TimeAgo('en-US')
 
 class IssueDetails extends Component {
+  componentDidMount () {
+    const ref = this.props.match.params.id
+    const user = this.props.user
+    this.props.dispatch(handleReceiveComments(ref, user))
+  }
   render () {
-    const id = this.props.match.params.id;    
-     const dummyData = {
+    const id = this.props.match.params.id
+    const dummyData = {
       created_on: '',
       updated_on: '',
       priority: 1,
@@ -21,24 +26,28 @@ class IssueDetails extends Component {
       created_by: '',
       assigned_to: '',
       status_text: '',
-      project: '',
+      project: ''
     }
     const issue = this.props.issues[id] ? this.props.issues[id] : dummyData
-    console.log("ISSUE >> " + JSON.stringify(issue))
+    console.log('ISSUE >> ' + JSON.stringify(issue))
 
-    const { redirect } = this.props;
-
+    const { redirect } = this.props
+    const comments = this.props.comments
+      ? Object.values(this.props.comments)
+      : []
     if (redirect) {
-      return <Redirect to="/login" />;
+      return <Redirect to='/login' />
     }
     return (
       <div className='issue-view'>
         <div className='row'>
           <div id='issue-details-main' className='col-8'>
+            <div id="issue-content">
             <i className='fa fa-bug issue-view-icon' /> BUG-{issue._id}
             <p className='h2 my-3'>{issue.issue_title}</p>
             <p className='h6'>Details</p>
             <p className='my-4'>{issue.issue_text}</p>
+            </div>
             <div id='issue-details-add-comment'>
               <form className='form-inline'>
                 <div className='form-group mb-2'>
@@ -55,7 +64,13 @@ class IssueDetails extends Component {
                   Submit
                 </button>
               </form>
+              {/* comment list */}
+              <div id='comments-section'>
+              {comments.map(c => <Comment key={c._id} comment={c} />)}
+              {/* comments end */}
             </div>
+            </div>
+           
           </div>
           <div id='issue-details-side' className='col-4'>
             {/* card */}
@@ -100,7 +115,10 @@ class IssueDetails extends Component {
                 </p>
 
                 <div>
-                  <button type='submit' className='btn btn-block btn-warning mt-3'>
+                  <button
+                    type='submit'
+                    className='btn btn-block btn-warning mt-3'
+                  >
                     Update
                   </button>
                 </div>
@@ -115,10 +133,12 @@ class IssueDetails extends Component {
   }
 }
 
-function mapStateToProps ({issues, user}) {
-  const redirect = !(user && user.accessToken);
+function mapStateToProps ({ issues, user, comments }) {
+  const redirect = !(user && user.accessToken)
 
   return {
+    user,
+    comments,
     issues,
     redirect
   }

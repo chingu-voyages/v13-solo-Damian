@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom'
 class IssuesDashboard extends Component {
   render () {
     const { issues, user } = this.props
-    const project = user ? user.defaultProject || 'TEST' : 'Unknown' // TODO hardcoded data
+    const project = user ? user.defaultProject : 'Unknown' 
     const { redirect } = this.props
 
     if (redirect) {
@@ -19,8 +19,9 @@ class IssuesDashboard extends Component {
           <i className='fa fa-table' />
           <span className='h6'> Issues Logged in project </span>
           <span className='h5'>
-            {project}{' '}
+            {project}
           </span>
+          <i className='fa fa-refresh pull-right' />
         </div>
         <div className='card-body'>
           <div className='table-responsive'>

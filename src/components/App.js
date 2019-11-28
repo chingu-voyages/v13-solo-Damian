@@ -6,7 +6,6 @@ import IssueSearch from './IssueSearch'
 import IssuesDashboard from './IssuesDashboard'
 import CreateIssue from './CreateIssue'
 import { connect } from 'react-redux'
-// import { handleReceiveIssues } from '../actions/issueActionsCrseator'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import IssueDetails from './IssueDetails'
 import Registration from './Registration'
@@ -29,7 +28,6 @@ class App extends Component {
 const NoNavContainer = () =>
   <div className='App'>
     <div className='container'>
-      {/* <Route exact path='/' render={() => <Redirect to='/login' />} /> */}
       <Route path='/login' component={Login} />
       <Route path='/register' component={Registration} />
     </div>

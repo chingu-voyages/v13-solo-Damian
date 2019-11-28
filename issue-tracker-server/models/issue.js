@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-
+const Comment = require( './comment')
 const issueSchema = new Schema({
   issue_title: { type: String, required: true },
   project: { type: String, required: true },
@@ -11,6 +11,14 @@ const issueSchema = new Schema({
   assigned_to: { type: String, required: false },
   status_text: { type: String, required: false },
   priority: { type: Number, required: true, default: 1 },
-  open: { type: Boolean, required: true, default: true }
+  open: { type: Boolean, required: true, default: true },
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 })
+
+issueSchema.methods.addComment = function(commentBody) {
+  const that = this;
+  const comment = new Comment(commentBody);
+  comment.save().then(c => { that.comments.push(c._id); return c})
+}
+
 module.exports = mongoose.model('Issue', issueSchema)

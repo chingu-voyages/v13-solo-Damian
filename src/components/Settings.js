@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Select from "react-select";
 import { Redirect } from "react-router-dom";
@@ -71,7 +70,9 @@ class Settings extends Component {
           <div className="form-group">
             <label htmlFor="defaultProject">Default Project</label>
             <Select
-              value={this.state.defaultProject}
+              value={options.find(
+                val => val.value === this.state.defaultProject
+              )}
               onChange={this.handleSelectChange}
               options={options}
               name="defaultProject"

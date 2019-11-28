@@ -13,21 +13,36 @@ const api = {
       headers: headers(token)
     }).then(response => response.json())
   },
-  getPosts (project, token) {
+  getIssues (project, token) {
     return fetch(`${BASE_URL}/${project}`, {
       method: 'GET',
       headers: headers(token)
     }).then(response => response.json())
   },
 
-  getPostsByRef (ref, token) {
+  getIssueByRef (ref, token) {
     return fetch(`${BASE_URL}/details/${ref}`, {
       method: 'GET',
       headers: headers(token)
     }).then(response => response.json())
   },
-
-  createPost (issue, token) {
+  getComments (ref, token) {
+    return fetch(`${BASE_URL}/${ref}/comments`, {
+      method: 'GET',
+      headers: headers(token)
+    }).then(response => response.json())
+  },
+  createComment (ref, comment, token) {
+    return fetch(`${BASE_URL}/${ref}/comments`, {
+      method: 'POST',
+      headers: {
+        ...headers(token),
+        ...{ 'Content-Type': 'application/json' }
+      },
+      body: JSON.stringify(comment)
+    }).then(response => response.json())
+  },
+  createIssue (issue, token) {
     return fetch(`${BASE_URL}/${issue.project}`, {
       method: 'POST',
       headers: {

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Issue = require('../models/issue')
+const Comment = require('../models/comment')
 
 router
   .get('/projects', (req, res, next) => {
@@ -29,6 +30,21 @@ router
       .then(data => {
         res.json(data)
       })
+      .catch(error => next(error))
+  })
+  .post('/:issueId/comments', (req, res, next) => {
+    const { issueId } = req.params
+    const comment = { ...req.body, ...{ issue: issueId } }
+    Issue.findById(issueId)
+      .then(issue => issue.addComment(comment))
+      .then(() => res.json({ message: 'OK' }))
+      .catch(error => next(error))
+  })
+  .get('/:issueId/comments', (req, res, next) => {
+    const { project, issueId } = req.params
+    const comment = { ...req.body, ...{ issue: issueId } }
+    Comment.find({ issue: issueId })
+      .then(data => res.json(data))
       .catch(error => next(error))
   })
   .put('/:project', (req, res, next) => {

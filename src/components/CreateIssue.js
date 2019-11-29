@@ -38,12 +38,10 @@ class CreateIssue extends Component {
 
   handleOnChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-    console.log("FORM STATE CHANGED: " + JSON.stringify(this.state));
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(JSON.stringify("handleSubmit " + { ...this.state }));
     this.props.dispatch(handleAddIssue({ ...this.state }, this.props.user));
     this.props.history.push("/");
   };
@@ -138,14 +136,9 @@ class CreateIssue extends Component {
 }
 
 function mapStateToProps({ user }) {
-  console.log("mapStateToProps " + JSON.stringify(user));
-  // const {user} = state
-
   const created_by = user.email;
   const assigned_to = user.email;
   const redirect = !(user && user.accessToken);
-  console.log("CreateIssue-mapStateToProps-redirect? " + redirect);
-
   return {
     redirect,
     user,

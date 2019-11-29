@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Comment from './Comment'
+import CommentForm from './CommentForm'
 import { connect } from 'react-redux'
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
@@ -11,8 +12,7 @@ const timeAgo = new TimeAgo('en-US')
 class IssueDetails extends Component {
   componentDidMount () {
     const ref = this.props.match.params.id
-    const user = this.props.user
-    this.props.dispatch(handleReceiveComments(ref, user))
+    this.props.dispatch(handleReceiveComments(ref))
   }
   render () {
     const id = this.props.match.params.id
@@ -29,7 +29,6 @@ class IssueDetails extends Component {
       project: ''
     }
     const issue = this.props.issues[id] ? this.props.issues[id] : dummyData
-    console.log('ISSUE >> ' + JSON.stringify(issue))
 
     const { redirect } = this.props
     const comments = this.props.comments
@@ -42,35 +41,19 @@ class IssueDetails extends Component {
       <div className='issue-view'>
         <div className='row'>
           <div id='issue-details-main' className='col-8'>
-            <div id="issue-content">
-            <i className='fa fa-bug issue-view-icon' /> BUG-{issue._id}
-            <p className='h2 my-3'>{issue.issue_title}</p>
-            <p className='h6'>Details</p>
-            <p className='my-4'>{issue.issue_text}</p>
+            <div id='issue-content'>
+              <i className='fa fa-bug issue-view-icon' /> BUG-{issue._id}
+              <p className='h2 my-3'>{issue.issue_title}</p>
+              <p className='h6'>Details</p>
+              <p className='my-4'>{issue.issue_text}</p>
             </div>
             <div id='issue-details-add-comment'>
-              <form className='form-inline'>
-                <div className='form-group mb-2'>
-                  <i className='fa fa-user issue-view-icon mr-2' />
-                  <input
-                    type='text'
-                    readonly
-                    className='form-control'
-                    id='comment'
-                    value='Add a Comment ... '
-                  />
-                </div>
-                <button type='submit' className='btn btn-primary mb-2 mx-1'>
-                  Submit
-                </button>
-              </form>
-              {/* comment list */}
+              <CommentForm issueRef={id}/>
               <div id='comments-section'>
-              {comments.map(c => <Comment key={c._id} comment={c} />)}
-              {/* comments end */}
+                {comments.map(c => <Comment key={c._id} comment={c} />)}
+                {/* comments end */}
+              </div>
             </div>
-            </div>
-           
           </div>
           <div id='issue-details-side' className='col-4'>
             {/* card */}

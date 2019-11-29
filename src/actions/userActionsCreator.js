@@ -5,8 +5,9 @@ import {
   handleRetrieveAvailableProjects
 } from './issueActionsCreator'
 
-export function handleLogout (user) {
-  return dispatch => {
+export function handleLogout () {
+  return (dispatch, getState) => {
+    const user = getState().user
     api
       .logout(user.email)
       .then(user => dispatch(signOut(user)))
@@ -23,8 +24,9 @@ export function handleUpdate (user) {
   }
 }
 
-function handleGetUserDetails (user) {
-  return dispatch => {
+function handleGetUserDetails () {
+  return (dispatch, getState) => {
+    const user = getState().user
     api
       .getUserDetails(user.email)
       .then(user => dispatch(update(user)))

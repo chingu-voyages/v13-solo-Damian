@@ -40,9 +40,14 @@ router
       .then(() => res.json({ message: 'OK' }))
       .catch(error => next(error))
   })
+  .delete('/comments/:commentId', (req, res, next) => {
+    const { commentId, issueId } = req.params
+    Comment.deleteOne({ _id: commentId })
+      .then(data => res.json({ message: data }))
+      .catch(error => next(error))
+  })
   .get('/:issueId/comments', (req, res, next) => {
-    const { project, issueId } = req.params
-    const comment = { ...req.body, ...{ issue: issueId } }
+    const { issueId } = req.params
     Comment.find({ issue: issueId })
       .then(data => res.json(data))
       .catch(error => next(error))

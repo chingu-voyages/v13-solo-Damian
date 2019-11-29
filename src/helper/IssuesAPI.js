@@ -42,6 +42,14 @@ const api = {
       body: JSON.stringify(comment)
     }).then(response => response.json())
   },
+  deleteComment (ref, token) {
+    return fetch(`${BASE_URL}/comments/${ref}`, {
+      method: 'DELETE',
+      headers: {
+        ...headers(token)
+      }
+    }).then(response => response.json())
+  },
   createIssue (issue, token) {
     return fetch(`${BASE_URL}/${issue.project}`, {
       method: 'POST',

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./issue-tracker-server/server.js",
+    "start": "concurrently --kill-others \"npm run ui\" \"npm run server\"",
     "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run ui\"",
     "server": "node ./issue-tracker-server/server.js",
     "dev-server": "nodemon ./issue-tracker-server/server.js",

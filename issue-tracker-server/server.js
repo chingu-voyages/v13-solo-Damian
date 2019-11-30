@@ -30,10 +30,8 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 400)
   return res.send(err.message)
 })
-
 const DB_URI = process.env.MONGOLAB_URI
 console.log(`Connecting to database:  ${DB_URI}`)
 mongoose.connect(DB_URI, { useUnifiedTopology: true, useNewUrlParser: true })
-
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`))
 module.exports = app

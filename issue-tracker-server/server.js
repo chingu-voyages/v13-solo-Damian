@@ -8,7 +8,10 @@ const issuesRouter = require('./routes/issues')
 const authRouter = require('./routes/auth')
 const cors = require('cors')
 const app = express()
-const SERVER_PORT = process.env.SERVER_PORT || 3000
+const SERVER_PORT =
+  process.env.MODE === 'SERVER'
+    ? process.env.PORT
+    : process.env.SERVER_PORT || 3030
 const mongoose = require('mongoose')
 mongoose.set('useFindAndModify', false)
 

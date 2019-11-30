@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./issue-tracker-server/server.js",
-    "server": "nodemon ./issue-tracker-server/server.js",
+    "start": "concurrently --kill-others \"npm run server\" \"npm run ui\"",
+    "dev": "concurrently --kill-others \"npm run dev-server\" \"npm run ui\"",
+    "server": "node ./issue-tracker-server/server.js",
+    "dev-server": "nodemon ./issue-tracker-server/server.js",
     "ui": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -48,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0"
   }
 }

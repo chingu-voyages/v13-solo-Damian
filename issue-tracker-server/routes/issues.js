@@ -4,6 +4,15 @@ const Issue = require('../models/issue')
 const Comment = require('../models/comment')
 
 router
+  .get('/:project/search', (req, res, next) => {
+    const project = req.params.project
+    const query = req.query
+    console.log(JSON.stringify(query))
+    const filter = { ...req.query, project }
+    Issue.find(filter)
+      .then(result => res.json(result))
+      .catch(error => next(error))
+  })
   .get('/projects', (req, res, next) => {
     Issue.find()
       .distinct('project')
@@ -20,6 +29,24 @@ router
   .get('/details/:id', (req, res, next) => {
     Issue.findById(req.params.id)
       .then(result => res.json(result))
+      .catch(error => next(error))
+  })
+  .put('/details/:_id', (req, res, next) => {
+    const { _id } = req.params
+    const update = { ...req.body }
+    console.log('update: ' + JSON.stringify(update))
+    Issue.findByIdAndUpdate(_id, update)
+      .then(data => {
+        return res.json({ message: data })
+      })
+      .catch(error => next(error))
+  })
+  .delete('/details/:_id', (req, res, next) => {
+    const { _id } = req.params
+    Issue.deleteOne({ _id })
+      .then(data => {
+        return res.json({ message: data })
+      })
       .catch(error => next(error))
   })
   .post('/:project', (req, res, next) => {
@@ -50,18 +77,6 @@ router
     const { issueId } = req.params
     Comment.find({ issue: issueId })
       .then(data => res.json(data))
-      .catch(error => next(error))
-  })
-  .put('/:project', (req, res, next) => {
-    Issue.findOneAndUpdate({ _id: req.body._id }, req.body)
-      .then(() => {
-        return res.json({ message: `successfully updated ${req.body._id}` })
-      })
-      .catch(error => next(error))
-  })
-  .delete('/:project', (req, res, next) => {
-    Issue.deleteOne({ _id: req.body._id })
-      .then(() => res.json({ message: `deleted ${req.body._id}` }))
       .catch(error => next(error))
   })
 

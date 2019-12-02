@@ -52,6 +52,7 @@ const DefaultContainer = () =>
             />
             <Route path='/create' component={CreateIssue} />
             <Route path='/details/:id' component={IssueDetails} />
+            <Route path='/edit/:id' component={CreateIssue} />
             <Route path='/settings' component={Settings} />
           </div>
         </div>

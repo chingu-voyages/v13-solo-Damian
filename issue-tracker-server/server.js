@@ -6,6 +6,8 @@ const logger = require('morgan')
 const indexRouter = require('./routes/index')
 const issuesRouter = require('./routes/issues')
 const authRouter = require('./routes/auth')
+const settingsRouter = require('./routes/settings')
+
 const cors = require('cors')
 const app = express()
 const SERVER_PORT =
@@ -25,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', indexRouter)
 app.use('/issues', issuesRouter)
 app.use('/auth', authRouter)
+app.use('/settings', settingsRouter)
 
 app.use(function (err, req, res, next) {
   res.status(err.status || 400)

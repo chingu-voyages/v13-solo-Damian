@@ -8,32 +8,32 @@ const headers = token => {
 }
 const api = {
   getProjects (token) {
-    return fetch(`${BASE_URL}/projects`, {
+    return fetch(`${BASE_URL}/issues/projects`, {
       method: 'GET',
       headers: headers(token)
     }).then(response => response.json())
   },
   getIssues (project, token) {
-    return fetch(`${BASE_URL}/${project}`, {
+    return fetch(`${BASE_URL}/issues/${project}`, {
       method: 'GET',
       headers: headers(token)
     }).then(response => response.json())
   },
 
   getIssueByRef (ref, token) {
-    return fetch(`${BASE_URL}/details/${ref}`, {
+    return fetch(`${BASE_URL}/issues/details/${ref}`, {
       method: 'GET',
       headers: headers(token)
     }).then(response => response.json())
   },
   getComments (ref, token) {
-    return fetch(`${BASE_URL}/${ref}/comments`, {
+    return fetch(`${BASE_URL}/issues/${ref}/comments`, {
       method: 'GET',
       headers: headers(token)
     }).then(response => response.json())
   },
   createComment (ref, comment, token) {
-    return fetch(`${BASE_URL}/${ref}/comments`, {
+    return fetch(`${BASE_URL}/issues/${ref}/comments`, {
       method: 'POST',
       headers: {
         ...headers(token),
@@ -43,7 +43,7 @@ const api = {
     }).then(response => response.json())
   },
   deleteComment (ref, token) {
-    return fetch(`${BASE_URL}/comments/${ref}`, {
+    return fetch(`${BASE_URL}/issues/comments/${ref}`, {
       method: 'DELETE',
       headers: {
         ...headers(token)
@@ -51,13 +51,32 @@ const api = {
     }).then(response => response.json())
   },
   createIssue (issue, token) {
-    return fetch(`${BASE_URL}/${issue.project}`, {
+    return fetch(`${BASE_URL}/issues/${issue.project}`, {
       method: 'POST',
       headers: {
         ...headers(token),
         ...{ 'Content-Type': 'application/json' }
       },
       body: JSON.stringify(issue)
+    }).then(response => response.json())
+  },
+  updateIssue (issue, token) {
+    return fetch(`${BASE_URL}/issues/details/${issue._id}`, {
+      method: 'PUT',
+      headers: {
+        ...headers(token),
+        ...{ 'Content-Type': 'application/json' }
+      },
+      body: JSON.stringify(issue)
+    }).then(response => response.json())
+  },
+  deleteIssue (issue, token) {
+    return fetch(`${BASE_URL}/issues/details/${issue._id}`, {
+      method: 'DELETE',
+      headers: {
+        ...headers(token),
+        ...{ 'Content-Type': 'application/json' }
+      }
     }).then(response => response.json())
   }
 }

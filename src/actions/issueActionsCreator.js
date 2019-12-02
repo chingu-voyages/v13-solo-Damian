@@ -1,4 +1,4 @@
-import { addIssue, receiveIssues } from './issues'
+import { addIssue, receiveIssues, updateIssue, deleteIssue } from './issues'
 import { update } from './users'
 import api from '../helper/IssuesAPI'
 
@@ -10,10 +10,25 @@ export function handleAddIssue (issue) {
       .catch(error => console.log(JSON.stringify(error)))
   }
 }
-
+export function handleUpdateIssue (issue) {
+  return (dispatch, getState) => {
+    api
+      .updateIssue(issue, getState().user.accessToken)
+      .then(data => dispatch(updateIssue(data)))
+      .catch(error => console.log(JSON.stringify(error)))
+  }
+}
+export function handleDeleteIssue (issue) {
+  return (dispatch, getState) => {
+    api
+      .deleteIssue(issue, getState().user.accessToken)
+      .then(data => dispatch(deleteIssue(data)))
+      .catch(error => console.log(JSON.stringify(error)))
+  }
+}
 export function handleRetrieveAvailableProjects () {
   return (dispatch, getState) => {
-    const user = getState().user;
+    const user = getState().user
     api
       .getProjects(user.accessToken)
       .then(projects => {
@@ -26,7 +41,7 @@ export function handleRetrieveAvailableProjects () {
 
 export function handleReceiveIssues () {
   return (dispatch, getState) => {
-    const user = getState().user;
+    const user = getState().user
     api
       .getIssues(user.defaultProject || 'test', user.accessToken)
       .then(data => dispatch(receiveIssues(data)))

@@ -1,8 +1,8 @@
-const BASE_URL = process.env.REACT_APP_AUTH_API_URL
+const BASE_URL = process.env.REACT_APP_API_URL
 
 const api = {
   register (user) {
-    return fetch(`${BASE_URL}/register`, {
+    return fetch(`${BASE_URL}/auth/register`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -12,7 +12,7 @@ const api = {
     }).then(response => response.json())
   },
   login (user) {
-    return fetch(`${BASE_URL}/login`, {
+    return fetch(`${BASE_URL}/auth/login`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -23,7 +23,7 @@ const api = {
   },
 
   logout (user) {
-    return fetch(`${BASE_URL}/logout`, {
+    return fetch(`${BASE_URL}/auth/logout`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -33,7 +33,7 @@ const api = {
     }).then(response => response.json())
   },
   update (user) {
-    return fetch(`${BASE_URL}/update-user`, {
+    return fetch(`${BASE_URL}/auth/update-user`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -44,7 +44,7 @@ const api = {
   },
 
   getUserDetails (email) {
-    return fetch(`${BASE_URL}/user/${email}`, {
+    return fetch(`${BASE_URL}/auth/user/${email}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json'

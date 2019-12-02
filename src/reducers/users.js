@@ -1,6 +1,6 @@
 import { USER_LOGOUT, USER_LOGIN, USER_UPDATE } from '../actions/users'
 
-export default function Users (state = {}, action) {
+export default function user (state = {}, action) {
   switch (action.type) {
     case USER_LOGIN:
       return { ...state, ...action.user }

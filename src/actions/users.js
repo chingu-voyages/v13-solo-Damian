@@ -2,11 +2,6 @@ export const USER_LOGOUT = 'USER_LOGOUT'
 export const USER_LOGIN = 'USER_LOGIN'
 export const USER_UPDATE = 'USER_UPDATE'
 
-
-
-// import { USER_LOGOUT, USER_LOGIN } from '../actions/users'
-
-
 export function logIn (user) {
   return {
     type: USER_LOGIN,

@@ -4,6 +4,7 @@ import {
   handleReceiveIssues,
   handleRetrieveAvailableProjects
 } from './issueActionsCreator'
+import {handleGetSettings} from './settings'
 
 export function handleLogout () {
   return (dispatch, getState) => {
@@ -46,9 +47,10 @@ export function handleLogin (user) {
   return dispatch => {
     api.login(user).then(data => {
       dispatch(logIn({ ...user, ...data }))
-      dispatch(handleGetUserDetails(user))
-      dispatch(handleRetrieveAvailableProjects(user))
-      dispatch(handleReceiveIssues(user))
+      dispatch(handleGetUserDetails())
+      dispatch(handleRetrieveAvailableProjects())
+      dispatch(handleReceiveIssues())
+      dispatch(handleGetSettings())
     })
   }
 }

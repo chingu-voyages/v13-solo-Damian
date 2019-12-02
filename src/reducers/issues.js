@@ -1,4 +1,9 @@
-import { ADD_ISSUE, RECEIVE_ISSUES, UPDATE_ISSUE, DELETE_ISSUE } from '../actions/issues'
+import {
+  ADD_ISSUE,
+  RECEIVE_ISSUES,
+  UPDATE_ISSUE,
+  DELETE_ISSUE
+} from '../actions/issues'
 
 export default function Issues (state = {}, action) {
   switch (action.type) {
@@ -19,10 +24,9 @@ export default function Issues (state = {}, action) {
       }
 
     case UPDATE_ISSUE:
-      return {
-        ...state,
-        ...(state[action.issue._id] = action.issue)
-      }
+      const updateNewState = { ...state }
+      updateNewState[action.issue._id] = action.issue
+      return updateNewState
     case DELETE_ISSUE:
       const deleteNewState = { ...state }
       delete deleteNewState[action.issue._id]

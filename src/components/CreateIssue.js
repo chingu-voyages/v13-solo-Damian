@@ -36,7 +36,7 @@ class CreateIssue extends Component {
 
   handleStatusChange = selectedOption => {
     console.log(JSON.stringify(selectedOption));
-    this.setState({ status: selectedOption.value });
+    this.setState({ status_text: selectedOption.value });
   };
 
   handleProjectChange = selectedOption => {
@@ -66,15 +66,15 @@ class CreateIssue extends Component {
 
   handleDelete = e => {
     console.log("DELETE CLICKED");
+    this.props.dispatch(handleDeleteIssue({ ...this.state }));
+    this.props.history.push("/");
   };
   handleSubmit = e => {
     e.preventDefault();
     if (this.props.issue) {
-      this.props.dispatch(
-        handleUpdateIssue({ ...this.state }, this.props.user)
-      );
+      this.props.dispatch(handleUpdateIssue({ ...this.state }));
     } else {
-      this.props.dispatch(handleAddIssue({ ...this.state }, this.props.user));
+      this.props.dispatch(handleAddIssue({ ...this.state }));
     }
     this.props.history.push("/");
   };
@@ -169,7 +169,9 @@ class CreateIssue extends Component {
           <div className="form-group">
             <label htmlFor="statusSelect">Status</label>
             <Select
-              value={optionsStatus.find(val => val.value === this.state.status_text)}
+              value={optionsStatus.find(
+                val => val.value === this.state.status_text
+              )}
               onChange={this.handleStatusChange}
               options={optionsStatus}
               name="status_text"

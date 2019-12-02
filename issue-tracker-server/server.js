@@ -9,9 +9,9 @@ const authRouter = require('./routes/auth')
 const cors = require('cors')
 const app = express()
 const SERVER_PORT =
-  process.env.MODE === 'SERVER'
+  (process.env.MODE === 'SERVER'
     ? process.env.PORT
-    : process.env.SERVER_PORT || 3030
+    : process.env.SERVER_PORT) || 3030
 const mongoose = require('mongoose')
 mongoose.set('useFindAndModify', false)
 

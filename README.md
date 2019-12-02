@@ -24,10 +24,11 @@ npm install
 ## Running app
 
 ```bash
-npm run dev-server
-```
-```bash
-npm start
+npm start # run both server and web client
+npm run dev # run server with nodemon and web client
+npm run server # run just server
+npm run dev-server # run just server with nodemon 
+npm run ui # run just UI
 ```
 
 ## API DOC

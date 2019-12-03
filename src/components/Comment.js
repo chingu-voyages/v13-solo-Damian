@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { handleDeleteComment } from '../actions/commentActionsCreator'
-import {connect} from 'react-redux'
-class Comment extends Component {
+import { connect } from 'react-redux'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 
+TimeAgo.addLocale(en)
+const timeAgo = new TimeAgo('en-US')
+
+class Comment extends Component {
   render () {
     const comment = this.props.comment
     return (
@@ -16,11 +21,15 @@ class Comment extends Component {
         <div className='card-footer bg-light p-1'>
           <span className='ml-3'>
             <small>
-              Created on {comment.created_on} by {comment.author}
+              Created on {timeAgo.format(new Date(comment.created_on))}{' '}
+              {comment.author && `by ${comment.author}`}
             </small>
           </span>
           <span className='pull-right'>
-            <i className='fa fa-trash' onClick={()=> this.props.dispatchDeleteComment(comment._id)}/>
+            <i
+              className='fa fa-trash'
+              onClick={() => this.props.dispatchDeleteComment(comment)}
+            />
           </span>
         </div>
       </div>
@@ -28,9 +37,9 @@ class Comment extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return({
-      dispatchDeleteComment: (ref) => dispatch(handleDeleteComment(ref))
-  })
+function mapDispatchToProps (dispatch) {
+  return {
+    dispatchDeleteComment: comment => dispatch(handleDeleteComment(comment))
+  }
 }
-export default connect(null, mapDispatchToProps)(Comment);
+export default connect(null, mapDispatchToProps)(Comment)

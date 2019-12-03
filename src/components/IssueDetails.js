@@ -38,7 +38,9 @@ class IssueDetails extends Component {
             <div id="issue-details-add-comment">
               <CommentForm issueRef={id} />
               <div id="comments-section">
-                {comments.map(c => <Comment key={c._id} comment={c} />)}
+                {Object.keys(comments).map(i =>
+                  <Comment key={i} comment={comments[i]} />
+                )}
                 {/* comments end */}
               </div>
             </div>

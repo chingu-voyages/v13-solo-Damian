@@ -64,7 +64,7 @@ router
     const comment = { ...req.body, ...{ issue: issueId } }
     Issue.findById(issueId)
       .then(issue => issue.addComment(comment))
-      .then(() => res.json({ message: 'OK' }))
+      .then(comment => res.json(comment))
       .catch(error => next(error))
   })
   .delete('/comments/:commentId', (req, res, next) => {

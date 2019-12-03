@@ -18,7 +18,7 @@ const issueSchema = new Schema({
 issueSchema.methods.addComment = function(commentBody) {
   const that = this;
   const comment = new Comment(commentBody);
-  comment.save().then(c => { that.comments.push(c._id); return c})
+  return comment.save().then(c => { that.comments.push(c._id); return c})
 }
 
 module.exports = mongoose.model('Issue', issueSchema)

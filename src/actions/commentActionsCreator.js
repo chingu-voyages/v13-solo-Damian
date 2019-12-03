@@ -6,17 +6,17 @@ export function handleCreateComment (comment) {
     const user = getState().user
     api
       .createComment(comment.issue, comment, user.accessToken)
-      .then(data => dispatch(addComment(data)))
+      .then(comment => dispatch(addComment(comment)))
       .catch(error => console.log(JSON.stringify(error)))
   }
 }
 
-export function handleDeleteComment (commentId) {
+export function handleDeleteComment (comment) {
   return (dispatch, getState) => {
     const user = getState().user
     api
-      .deleteComment(commentId, user.accessToken)
-      .then(() => dispatch(deleteComment(commentId)))
+      .removeComment(comment._id, user.accessToken)
+      .then(() => dispatch(deleteComment(comment)))
       .catch(error => console.log(JSON.stringify(error)))
   }
 }

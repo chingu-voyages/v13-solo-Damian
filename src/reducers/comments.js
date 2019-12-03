@@ -7,21 +7,21 @@ import {
 export default function comments (state = {}, action) {
   switch (action.type) {
     case RECEIVE_COMMENTS:
-      return {
-        ...state,
-        ...action.comments
-      }
+      const newState = {}
+      action.comments.forEach(element => {
+        newState[element._id] = element
+      })
+      return newState
 
     case ADD_COMMENT:
       return {
         ...state,
-        ...action.comment
+        ...{ [action.comment._id]: action.comment }
       }
     case DELETE_COMMENT:
-      const copyOfState = Object.values(state).filter(
-        c => c._id !== c.action.commentId
-      )
-      return copyOfState
+      const deleteNewState = { ...state }
+      delete deleteNewState[action.comment._id]
+      return deleteNewState
 
     default:
       return state

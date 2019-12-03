@@ -42,7 +42,7 @@ const api = {
       body: JSON.stringify(comment)
     }).then(response => response.json())
   },
-  deleteComment (ref, token) {
+  removeComment (ref, token) {
     return fetch(`${BASE_URL}/issues/comments/${ref}`, {
       method: 'DELETE',
       headers: {

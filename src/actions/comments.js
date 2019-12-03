@@ -9,10 +9,10 @@ export function addComment (comment) {
   }
 }
 
-export function deleteComment (commentId) {
+export function deleteComment (comment) {
   return {
     type: DELETE_COMMENT,
-    commentId
+    comment
   }
 }
 

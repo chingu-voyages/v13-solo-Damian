@@ -88,7 +88,7 @@ class IssueDetails extends Component {
                 <div>
                   <button
                     type="submit"
-                    className="btn btn-block btn-warning mt-3"
+                    className="btn btn-block btn-info mt-3"
                     onClick={() =>
                       this.props.history.push(
                         `/edit/${this.props.match.params.id}`

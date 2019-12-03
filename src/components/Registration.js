@@ -26,12 +26,9 @@ class Registration extends Component {
     return (
       <div className="container">
         <div className="wrap-login">
-          <h1 className="text-center mt-5">
-            <i className="fa fa-bug" /> Register
-          </h1>
-          <form className="mt-5" onSubmit={this.handleSubmit}>
+          <div className="logo-login" />
+          <form className="mt-2" onSubmit={this.handleSubmit}>
             <div className="form-group">
-              <label for="inputEmail">Email</label>
               <input
                 name="email"
                 type="text"
@@ -44,7 +41,6 @@ class Registration extends Component {
               />
             </div>
             <div className="form-group">
-              <label for="inputPassword">Password</label>
               <input
                 name="password"
                 type="password"
@@ -56,7 +52,7 @@ class Registration extends Component {
               />
             </div>
             <button type="submit" className="btn btn-primary">
-              Submit
+              Register
             </button>
             <span className="float-right">
               <Link to="/login">Already have an account?</Link>

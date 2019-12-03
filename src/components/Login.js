@@ -32,9 +32,7 @@ class Login extends Component {
     return (
       <div className="container">
         <div className="wrap-login">
-          <h1 className="text-center mt-5">
-            <i className="fa fa-bug" /> Issue Tracker
-          </h1>
+          <div className="logo-login" />
           <form className="mt-3" onSubmit={this.handleSubmit}>
             <div className="form-group">
               <input
@@ -72,10 +70,10 @@ class Login extends Component {
   }
 }
 function mapStateToProps({ user }) {
-  const redirect = user && user.accessToken
+  const redirect = user && user.accessToken;
   console.log("LOGIN-mapStateToProps: " + redirect);
   return {
-    redirect
+    redirect,
   };
 }
 export default connect(mapStateToProps)(Login);

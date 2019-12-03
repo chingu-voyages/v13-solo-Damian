@@ -8,11 +8,18 @@
   padding: 50px;
   margin-top: 50px;
 }
+
+.logo-image{
+  background-image: url('../res/images/issue_tracker.png'); 
+  background-position: 0 -32px; 
+  background-size: 100px;
+  width: 100px; 
+  height: 40px;
+}
 .issue-view{
   height: 100vh;
   width: 90%;
   margin:auto;
-  /* background-color: azure; */
 }
 .details-label{
   display: inline-block;
@@ -30,6 +37,9 @@ position: relative;
 #issue-details-add-comment{
   bottom: 0;
   left: 0;
+}
+.project-name{
+  text-transform: capitalize;
 }
 
 .issue-view-icon{

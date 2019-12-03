@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { handleLogout } from "../actions/userActionsCreator";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+const logo = require('../res/images/issue_tracker.png')
 
 class Navbar extends Component {
   logout = () => {
@@ -12,6 +13,9 @@ class Navbar extends Component {
     const { user } = this.props;
     return (
       <nav className="navbar navbar-expand-sm navbar-light bg-light">
+         <a className="navbar-brand" href="#">
+          <div className="logo-image" />
+        </a>
         <button
           className="navbar-toggler"
           type="button"

@@ -1,35 +1,40 @@
-import React, { Component } from 'react'
-import Issue from './Issue'
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
-
+import React, { Component } from "react";
+import Issue from "./Issue";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import {handleReceiveIssues} from '../actions/issueActionsCreator'
 class IssuesDashboard extends Component {
-  render () {
-    const { issues, user } = this.props
-    const project = user ? user.defaultProject : 'Unknown' 
-    const { redirect } = this.props
+  handleRefresh = () => {
+    this.props.dispatch(handleReceiveIssues());
+  };
+
+  render() {
+    const { issues, user } = this.props;
+    const project = user ? user.defaultProject : "Unknown";
+    const { redirect } = this.props;
 
     if (redirect) {
-      return <Redirect to='/login' />
+      return <Redirect to="/login" />;
     }
     return (
       issues &&
-      <div className='card mb-3'>
-        <div className='card-header'>
-          <i className='fa fa-table' />
-          <span className='h6'> Issues Logged in project </span>
-          <span className='h5'>
+      <div className="card mb-3">
+        <div className="card-header">
+          <i className="fa fa-table mr-2" />
+          <span className="h5 project-name">
             {project}
           </span>
-          <i className='fa fa-refresh pull-right' />
+          <button className="btn btn-light pull-right" onClick={this.handleRefresh}>
+            <i className="fa fa-refresh" />
+          </button>
         </div>
-        <div className='card-body'>
-          <div className='table-responsive'>
+        <div className="card-body">
+          <div className="table-responsive">
             <table
-              className='table table-bordered'
-              id='issuesTable'
-              width='100%'
-              cellSpacing='0'
+              className="table table-bordered"
+              id="issuesTable"
+              width="100%"
+              cellSpacing="0"
             >
               <thead>
                 <tr>
@@ -51,19 +56,17 @@ class IssuesDashboard extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-function mapStateToProps ({ issues, user }) {
-  const redirect = !(user && user.accessToken)
-  console.log('IssuesDashboard-mapStateToProps: ' + redirect)
-
+function mapStateToProps({ issues, user }) {
+  const redirect = !(user && user.accessToken);
   return {
     redirect,
     issues,
-    user
-  }
+    user,
+  };
 }
 
-export default connect(mapStateToProps)(IssuesDashboard)
+export default connect(mapStateToProps)(IssuesDashboard);

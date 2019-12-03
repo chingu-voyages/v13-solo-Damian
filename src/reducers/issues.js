@@ -12,10 +12,7 @@ export default function Issues (state = {}, action) {
       action.issues.forEach(element => {
         newState[element._id] = element
       })
-      return {
-        ...state,
-        ...newState
-      }
+      return newState
 
     case ADD_ISSUE:
       return {

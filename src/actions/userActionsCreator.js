@@ -4,10 +4,13 @@ import {
   handleReceiveIssues,
   handleRetrieveAvailableProjects
 } from './issueActionsCreator'
-import {handleGetSettings} from './settings'
+import { handleGetSettings } from './settings'
 
 export function handleLogout () {
   return (dispatch, getState) => {
+    localStorage.removeItem('email')
+    localStorage.removeItem('accessToken')
+
     const user = getState().user
     api
       .logout(user.email)
@@ -46,11 +49,23 @@ export function handleRegister (user) {
 export function handleLogin (user) {
   return dispatch => {
     api.login(user).then(data => {
+      localStorage.setItem('email', data.email)
+      localStorage.setItem('accessToken', data.accessToken)
       dispatch(logIn({ ...user, ...data }))
       dispatch(handleGetUserDetails())
       dispatch(handleRetrieveAvailableProjects())
       dispatch(handleReceiveIssues())
       dispatch(handleGetSettings())
     })
+  }
+}
+
+export function handleRestoreSession (user) {
+  return dispatch => {
+    dispatch(logIn(user))
+    dispatch(handleGetUserDetails())
+    dispatch(handleRetrieveAvailableProjects())
+    dispatch(handleReceiveIssues())
+    dispatch(handleGetSettings())
   }
 }

@@ -13,8 +13,12 @@ const api = {
       headers: headers(token)
     }).then(response => response.json())
   },
-  getIssues (project, token) {
-    return fetch(`${BASE_URL}/issues/${project}`, {
+  getIssues (project, token, other) {
+    let url = `${BASE_URL}/issues/${project}`
+    if (other && other.limit && other.page) {
+      url += `?page=${other.page}&limit=${other.limit}`
+    }
+    return fetch(url, {
       method: 'GET',
       headers: headers(token)
     }).then(response => response.json())

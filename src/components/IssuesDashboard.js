@@ -1,12 +1,36 @@
 import React, { Component } from "react";
 import Issue from "./Issue";
+import Pagination from "./Pagination";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import {handleReceiveIssues} from '../actions/issueActionsCreator'
+import { handleReceiveIssues } from "../actions/issueActionsCreator";
 class IssuesDashboard extends Component {
-  handleRefresh = () => {
-    this.props.dispatch(handleReceiveIssues());
+  state = {
+    pagination: { page: 1, limit: 10 },
   };
+  handleRefresh = () => {
+    const { page, limit } = this.state.pagination;
+    this.props.dispatch(handleReceiveIssues(page, limit));
+  };
+
+  handlePaginationNext = () => {
+    const { pagination } = { ...this.state };
+    const isLast = Object.keys(this.props.issues).length < this.state.limit;
+    if (!isLast) pagination.page += 1;
+    this.setState();
+    this.setState(pagination);
+    this.handleRefresh();
+  };
+  handlePaginationPrevious = () => {
+    const { pagination } = { ...this.state };
+    pagination.page = pagination.page > 1 ? pagination.page - 1 : 1;
+    this.setState(pagination);
+    this.handleRefresh();
+  };
+  componentDidMount() {
+    const { page, limit } = this.state.pagination;
+    this.props.dispatch(handleReceiveIssues(page, limit));
+  }
 
   render() {
     const { issues, user } = this.props;
@@ -24,7 +48,10 @@ class IssuesDashboard extends Component {
           <span className="h5 project-name">
             {project}
           </span>
-          <button className="btn btn-light pull-right" onClick={this.handleRefresh}>
+          <button
+            className="btn btn-light pull-right"
+            onClick={this.handleRefresh}
+          >
             <i className="fa fa-refresh" />
           </button>
         </div>
@@ -53,6 +80,12 @@ class IssuesDashboard extends Component {
                 )}
               </tbody>
             </table>
+          </div>
+          <div className="d-flex flex-row">
+            <Pagination
+              next={this.handlePaginationNext}
+              previous={this.handlePaginationPrevious}
+            />
           </div>
         </div>
       </div>

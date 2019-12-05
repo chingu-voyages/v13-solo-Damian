@@ -21,9 +21,13 @@ router
   })
   .get('/:project', (req, res, next) => {
     const project = req.params.project
-    const filter = { ...req.query, project }
+    const filter = { project }
+    const { page, limit } = req.query 
+    const startIndex = (page - 1) * limit
+    const endIndex = page * limit
+    console.log("START INDEX:" + startIndex + " END INDEX " + endIndex)
     Issue.find(filter)
-      .then(result => res.json(result))
+      .then(result => res.json(result.slice(startIndex,endIndex)))
       .catch(error => next(error))
   })
   .get('/details/:id', (req, res, next) => {

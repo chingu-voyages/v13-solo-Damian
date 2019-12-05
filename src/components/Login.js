@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { handleLogin } from "../actions/userActionsCreator";
+import {
+  handleLogin,
+  handleRestoreSession,
+} from "../actions/userActionsCreator";
 import { Redirect } from "react-router-dom";
 
 class Login extends Component {
@@ -23,6 +26,15 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  componentDidMount() {
+    const accessToken = localStorage.getItem("accessToken");
+    const email = localStorage.getItem("email");
+
+    if (accessToken && email) {
+      this.props.dispatch(handleRestoreSession({ email, accessToken }));
+      // this.props.history.push("/");
+    }
+  }
   render() {
     const { redirect } = this.props;
 

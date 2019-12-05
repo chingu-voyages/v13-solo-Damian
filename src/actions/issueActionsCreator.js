@@ -39,11 +39,11 @@ export function handleRetrieveAvailableProjects () {
   }
 }
 
-export function handleReceiveIssues () {
+export function handleReceiveIssues (page, limit) {
   return (dispatch, getState) => {
     const user = getState().user
     api
-      .getIssues(user.defaultProject || 'test', user.accessToken)
+      .getIssues(user.defaultProject || 'test', user.accessToken, {page, limit})
       .then(data => dispatch(receiveIssues(data)))
       .catch(error => console.log(JSON.stringify(error)))
   }

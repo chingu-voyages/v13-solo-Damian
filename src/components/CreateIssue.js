@@ -114,7 +114,9 @@ class CreateIssue extends Component {
 
     return (
       <div>
-        <p className="h2 ml-3 my-2">Create Issue</p>
+        <p className="h2 ml-3 my-2">
+          {this.props.issue ? "Update Issue" : "Create Issue"}
+        </p>
         <form className="issue-form mt-1" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="projectSelect">Project</label>

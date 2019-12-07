@@ -1,4 +1,5 @@
 import { addIssue, receiveIssues, updateIssue, deleteIssue } from './issues'
+import { showLoading, hideLoading } from 'react-redux-loading'
 import { update } from './users'
 import api from '../helper/IssuesAPI'
 
@@ -20,20 +21,26 @@ export function handleUpdateIssue (issue) {
 }
 export function handleDeleteIssue (issue) {
   return (dispatch, getState) => {
+    dispatch(showLoading())
     api
       .deleteIssue(issue, getState().user.accessToken)
-      .then(() => dispatch(deleteIssue(issue)))
+      .then(() => {
+        dispatch(deleteIssue(issue))
+      })
       .catch(error => console.log(JSON.stringify(error)))
   }
 }
 export function handleRetrieveAvailableProjects () {
   return (dispatch, getState) => {
+    dispatch(showLoading())
+
     const user = getState().user
     api
       .getProjects(user.accessToken)
       .then(projects => {
         user.availableProjects = projects
         dispatch(update(user))
+        dispatch(hideLoading())
       })
       .catch(error => console.log(error))
   }
@@ -41,10 +48,17 @@ export function handleRetrieveAvailableProjects () {
 
 export function handleReceiveIssues (page, limit) {
   return (dispatch, getState) => {
+    dispatch(showLoading())
     const user = getState().user
     api
-      .getIssues(user.defaultProject || 'test', user.accessToken, {page, limit})
-      .then(data => dispatch(receiveIssues(data)))
+      .getIssues(user.defaultProject || 'test', user.accessToken, {
+        page,
+        limit
+      })
+      .then(data => {
+        dispatch(receiveIssues(data));
+        dispatch(hideLoading())
+      })
       .catch(error => console.log(JSON.stringify(error)))
   }
 }

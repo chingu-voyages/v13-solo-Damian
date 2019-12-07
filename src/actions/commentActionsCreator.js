@@ -1,5 +1,6 @@
 import { addComment, receiveComments, deleteComment } from './comments'
 import api from '../helper/IssuesAPI'
+import { showLoading, hideLoading } from 'react-redux-loading'
 
 export function handleCreateComment (comment) {
   return (dispatch, getState) => {
@@ -22,10 +23,15 @@ export function handleDeleteComment (comment) {
 }
 export function handleReceiveComments (ref) {
   return (dispatch, getState) => {
+    dispatch(showLoading())
+
     const user = getState().user
     api
       .getComments(ref, user.accessToken)
-      .then(data => dispatch(receiveComments(data)))
+      .then(data => {
+        dispatch(receiveComments(data))
+        dispatch(hideLoading())
+      })
       .catch(error => console.log(JSON.stringify(error)))
   }
 }

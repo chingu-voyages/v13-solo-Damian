@@ -5,6 +5,7 @@ import {
   handleRetrieveAvailableProjects
 } from './issueActionsCreator'
 import { handleGetSettings } from './settings'
+import { showLoading, hideLoading } from 'react-redux-loading'
 
 export function handleLogout () {
   return (dispatch, getState) => {
@@ -48,6 +49,8 @@ export function handleRegister (user) {
 
 export function handleLogin (user) {
   return dispatch => {
+    dispatch(showLoading())
+
     api.login(user).then(data => {
       localStorage.setItem('email', data.email)
       localStorage.setItem('accessToken', data.accessToken)
@@ -56,16 +59,21 @@ export function handleLogin (user) {
       dispatch(handleRetrieveAvailableProjects())
       dispatch(handleReceiveIssues())
       dispatch(handleGetSettings())
+      dispatch(hideLoading())
+
     })
   }
 }
 
 export function handleRestoreSession (user) {
   return dispatch => {
+    dispatch(showLoading())
     dispatch(logIn(user))
     dispatch(handleGetUserDetails())
     dispatch(handleRetrieveAvailableProjects())
     dispatch(handleReceiveIssues())
     dispatch(handleGetSettings())
+    dispatch(hideLoading())
+
   }
 }

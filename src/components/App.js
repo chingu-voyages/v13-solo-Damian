@@ -25,7 +25,7 @@ class App extends Component {
   }
 }
 
-const NoNavContainer = () =>
+const NoNavContainer = props =>
   <div className='App'>
     <div className='container'>
       <Route path='/login' component={Login} />
@@ -33,7 +33,7 @@ const NoNavContainer = () =>
     </div>
   </div>
 
-const DefaultContainer = () =>
+const DefaultContainer = props =>
   <div className='App'>
     <div>
       <Navbar />
@@ -60,9 +60,9 @@ const DefaultContainer = () =>
     </div>
   </div>
 
-function mapStateToProps ({ authedUser }) {
+function mapStateToProps ({ loadingBar }) {
   return {
-    authedUser
+    loading: loadingBar.default > 0
   }
 }
 export default connect(mapStateToProps)(App)

@@ -17,7 +17,7 @@ class Issue extends Component {
       <tr>
         <td>
           <Link to={`/details/${issue._id}`}>
-            {issue._id}
+            <span className="issueId">{issue.issue_id}</span>
           </Link>
         </td>
         <td>

@@ -30,7 +30,7 @@ class IssueDetails extends Component {
         <div className="row">
           <div id="issue-details-main" className="col-8">
             <div id="issue-content">
-              <i className="fa fa-bug issue-view-icon" /> BUG-{issue._id}
+              <i className="fa fa-bug issue-view-icon" /> <span className='issueId'>{issue.issue_id}</span>
               <p className="h2 my-3">{issue.issue_title}</p>
               <p className="h6">Details</p>
               <p className="my-4">{issue.issue_text}</p>

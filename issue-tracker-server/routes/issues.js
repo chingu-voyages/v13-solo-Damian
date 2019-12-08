@@ -19,16 +19,12 @@ router
       .then(result => res.json(result))
       .catch(error => next(error))
   })
-  .get('/:project', (req, res, next) => {
-    const project = req.params.project
-    const filter = { project }
-    const { page, limit } = req.query 
-    const startIndex = (page - 1) * limit
-    const endIndex = page * limit
-    console.log("START INDEX:" + startIndex + " END INDEX " + endIndex)
-    Issue.find(filter)
-      .then(result => res.json(result.slice(startIndex,endIndex)))
-      .catch(error => next(error))
+  .get('/:project', paginatedResults(Issue), (req, res, next) => {
+    try {
+      res.json(res.paginatedResults)
+    } catch (error) {
+      next(error)
+    }
   })
   .get('/details/:id', (req, res, next) => {
     Issue.findById(req.params.id)
@@ -83,5 +79,46 @@ router
       .then(data => res.json(data))
       .catch(error => next(error))
   })
+
+function paginatedResults (model) {
+  return async (req, res, next) => {
+    const filter = { ...req.query }
+    delete filter.page
+    delete filter.limit
+    const count = await model.find(filter).countDocuments()
+    console.log('Count ' + count)
+    const { limit, page } = req.query
+    const startIndex = (page - 1) * limit
+    const endIndex = page * limit
+    const results = {}
+
+    if (endIndex < count) {
+      results.next = {
+        page: parseInt(page) + 1,
+        limit: limit
+      }
+    }
+    if (startIndex > 0) {
+      results.previous = {
+        page: parseInt(page) - 1,
+        limit: limit
+      }
+    }
+    results.pages =
+      count / limit % limit == 0 ? count / limit : parseInt(count / limit) + 1
+    try {
+      results.issues = await model.find(filter, null, {
+        skip: parseInt(startIndex),
+        limit: parseInt(limit),
+        desc: 'updated_on'
+      })
+      res.paginatedResults = results
+      next()
+    } catch (error) {
+      console.log(JSON.stringify(error))
+      next(new Error('Cannot get data from db (T⌓T)'))
+    }
+  }
+}
 
 module.exports = router

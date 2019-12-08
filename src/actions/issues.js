@@ -24,9 +24,10 @@ export function deleteIssue (issue) {
   }
 }
 
-export function receiveIssues (issues) {
+export function receiveIssues (data) {
   return {
     type: RECEIVE_ISSUES,
-    issues
+    issues: data.issues,
+    pagination: { next: data.next, previous: data.previous, pages: data.pages }
   }
 }

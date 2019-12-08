@@ -46,14 +46,15 @@ export function handleRetrieveAvailableProjects () {
   }
 }
 
-export function handleReceiveIssues (page, limit) {
+export function handleReceiveIssues (page, limit, search) {
   return (dispatch, getState) => {
     dispatch(showLoading())
     const user = getState().user
     api
       .getIssues(user.defaultProject || 'test', user.accessToken, {
         page,
-        limit
+        limit,
+        ...search
       })
       .then(data => {
         dispatch(receiveIssues(data));

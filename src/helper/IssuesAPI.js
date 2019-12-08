@@ -13,11 +13,19 @@ const api = {
       headers: headers(token)
     }).then(response => response.json())
   },
-  getIssues (project, token, other) {
+  getIssues (project, token, searchParams) {
     let url = `${BASE_URL}/issues/${project}`
-    if (other && other.limit && other.page) {
-      url += `?page=${other.page}&limit=${other.limit}`
+    if (searchParams) {
+      Object.keys(searchParams)
+        .filter(param => searchParams[param] && searchParams[param].toString().toLowerCase() !== 'any')
+        .forEach(
+          (searchParamName, i) =>
+            (url += `${i == 0 ? '?' : '&'}${searchParamName}=${searchParams[
+              searchParamName
+            ]}`)
+        )
     }
+
     return fetch(url, {
       method: 'GET',
       headers: headers(token)

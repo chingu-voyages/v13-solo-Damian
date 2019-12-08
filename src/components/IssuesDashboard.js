@@ -3,15 +3,17 @@ import Issue from "./Issue";
 import Pagination from "./Pagination";
 import { connect } from "react-redux";
 import Loading from "./Loading";
+import IssueSearch from "./IssueSearch"
 import { Redirect } from "react-router-dom";
 import { handleReceiveIssues } from "../actions/issueActionsCreator";
 class IssuesDashboard extends Component {
   state = {
     pagination: { page: 1, limit: 10 },
+    searchParams: {}
   };
   handleRefresh = () => {
     const { page, limit } = this.state.pagination;
-    this.props.dispatch(handleReceiveIssues(page, limit));
+    this.props.dispatch(handleReceiveIssues(page, limit, this.state.searchParams));
   };
 
   handlePaginationNext = () => {
@@ -32,6 +34,13 @@ class IssuesDashboard extends Component {
     const { page, limit } = this.state.pagination;
     this.props.dispatch(handleReceiveIssues(page, limit));
   }
+  onSubmitSearch = (params) => {
+    this.setState({...this.state, searchParams: params})
+    console.log("ON SUBMIT SEARCH: " + JSON.stringify(this.state))
+    const { page, limit } = this.state.pagination;
+    this.props.dispatch(handleReceiveIssues(page, limit, params));
+
+  }
 
   render() {
     const { issues, user, loading } = this.props;
@@ -43,59 +52,62 @@ class IssuesDashboard extends Component {
     }
     return (
       (loading && <Loading />) ||
-      (issues && issues.length > 0 ? <h3 className="text-center mt-3">No issues found. Try again later...<button
-      className="btn btn-light"
-      onClick={this.handleRefresh}
-    >
-      <i className="fa fa-refresh" />
-    </button></h3> :
-        <div className="card mb-3">
-          <div className="card-header">
-            <i className="fa fa-table mr-2" />
-            <span className="h5 project-name">
-              {project}
-            </span>
-            <button
-              className="btn btn-light pull-right"
+      (issues && issues.length > 0
+        ? <h3 className="text-center mt-3">
+            No issues found. Try again later...<button
+              className="btn btn-light"
               onClick={this.handleRefresh}
             >
               <i className="fa fa-refresh" />
             </button>
-          </div>
-          <div className="card-body">
-            <div className="table-responsive">
-              <table
-                className="table table-bordered"
-                id="issuesTable"
-                width="100%"
-                cellSpacing="0"
+          </h3>
+        : <div><IssueSearch searchParams={this.state.searchParams} onSubmitSearch={this.onSubmitSearch}/><div className="card mb-3">
+            <div className="card-header">
+              <i className="fa fa-table mr-2" />
+              <span className="h5 project-name">
+                {project}
+              </span>
+              <button
+                className="btn btn-light pull-right"
+                onClick={this.handleRefresh}
               >
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Priority</th>
-                    <th>Assignee</th>
-                    <th>Status</th>
-                    <th>Summary</th>
-                    <th>Changed</th>
-                  </tr>
-                </thead>
+                <i className="fa fa-refresh" />
+              </button>
+            </div>
+            <div className="card-body">
+              <div className="table-responsive">
+                <table
+                  className="table table-bordered"
+                  id="issuesTable"
+                  width="100%"
+                  cellSpacing="0"
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Priority</th>
+                      <th>Assignee</th>
+                      <th>Status</th>
+                      <th>Summary</th>
+                      <th>Changed</th>
+                    </tr>
+                  </thead>
 
-                <tbody>
-                  {Object.keys(issues).map(i =>
-                    <Issue key={i} issue={issues[i]} />
-                  )}
-                </tbody>
-              </table>
+                  <tbody>
+                    {Object.keys(issues).map(i =>
+                      <Issue key={i} issue={issues[i]} />
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              <div className="d-flex flex-row">
+                <Pagination
+                  next={this.handlePaginationNext}
+                  previous={this.handlePaginationPrevious}
+                />
+              </div>
             </div>
-            <div className="d-flex flex-row">
-              <Pagination
-                next={this.handlePaginationNext}
-                previous={this.handlePaginationPrevious}
-              />
-            </div>
-          </div>
-        </div>)
+          </div></div>)
     );
   }
 }

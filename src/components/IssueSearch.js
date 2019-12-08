@@ -4,9 +4,9 @@ import Select from "react-select";
 
 class IssueSearch extends Component {
   state = {
-    priority: 1,
-    status: "New",
-    contains: "",
+    priority: "Any",
+    status_text: "Any",
+    issue_title: "",
   };
 
   handlePriorityChange = selectedOption => {
@@ -16,7 +16,7 @@ class IssueSearch extends Component {
 
   handleStatusChange = selectedOption => {
     console.log(JSON.stringify(selectedOption));
-    this.setState({ status: selectedOption.value });
+    this.setState({ status_text: selectedOption.value });
   };
   handleOnChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -24,11 +24,14 @@ class IssueSearch extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log("handleSubmit " + JSON.stringify({ ...this.state }));
-    // this.props.dispatch(handleUpdate({ ...this.state }));
-
-    // this.props.history.push("/");
+    console.log("Submit search : " + JSON.stringify({ ...this.state }));
+    this.props.onSubmitSearch({ ...this.state });
+    // this.props.onSubmitSearch({ ...this.state })
   };
+
+  componentDidMount() {
+    this.setState({ ...this.props.searchParams });
+  }
   render() {
     const { priority, status } = this.props.settings;
 
@@ -38,6 +41,10 @@ class IssueSearch extends Component {
           label: priority,
         }))
       : [];
+    optionsPriority.unshift({
+      value: "any",
+      label: "Any",
+    });
 
     const optionsStatus = status
       ? status.map(status => ({
@@ -45,6 +52,10 @@ class IssueSearch extends Component {
           label: status,
         }))
       : [];
+    optionsStatus.unshift({
+      value: "any",
+      label: "Any",
+    });
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -62,24 +73,16 @@ class IssueSearch extends Component {
           </div>
           <div className="col-sm-3 my-1">
             <Select
-              value={optionsStatus.find(val => val.value === this.state.status)}
+              value={optionsStatus.find(
+                val => val.value === this.state.status_text
+              )}
               onChange={this.handleStatusChange}
               options={optionsStatus}
               name="status"
               placeholder="Status..."
             />
           </div>
-          <div className="col-sm-3 my-1">
-            <input
-              type="text"
-              className="form-control my-1 mr-sm-2"
-              id="contains"
-              placeholder="Contains..."
-              value={this.state.contains}
-              name="contains"
-              onChange={this.handleOnChange}
-            />
-          </div>
+
           <div className="col-auto my-1">
             <button type="submit" className="btn btn-primary">
               Submit

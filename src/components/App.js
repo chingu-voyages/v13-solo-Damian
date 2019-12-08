@@ -46,7 +46,6 @@ const DefaultContainer = props =>
               path='/'
               render={() =>
                 <div>
-                  <IssueSearch />
                   <IssuesDashboard />
                 </div>}
             />

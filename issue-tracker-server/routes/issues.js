@@ -7,7 +7,6 @@ router
   .get('/:project/search', (req, res, next) => {
     const project = req.params.project
     const query = req.query
-    console.log(JSON.stringify(query))
     const filter = { ...req.query, project }
     Issue.find(filter)
       .then(result => res.json(result))
@@ -82,7 +81,15 @@ router
 
 function paginatedResults (model) {
   return async (req, res, next) => {
+    console.log('paginatedResults' + JSON.stringify(req.query))
+
     const filter = { ...req.query }
+    if (filter.issue_title) {
+      const text = filter.issue_title
+      filter.issue_title = `/${text}/`
+    }
+    console.log('Filter = ' + JSON.stringify(filter))
+
     delete filter.page
     delete filter.limit
     const count = await model.find(filter).countDocuments()

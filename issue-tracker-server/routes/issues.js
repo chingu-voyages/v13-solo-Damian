@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Issue = require('../models/issue')
 const Comment = require('../models/comment')
+const Counter = require('../models/counter')
 
 router
   .get('/:project/search', (req, res, next) => {
@@ -46,9 +47,11 @@ router
       })
       .catch(error => next(error))
   })
-  .post('/:project', (req, res, next) => {
+  .post('/:project', async (req, res, next) => {
+    const count = await getCountAndIncrease()
     const project = req.params.project
-    const issue = new Issue({ ...req.body, project })
+    const issue_id = `${project}-${count}`
+    const issue = new Issue({ ...req.body, project, issue_id })
     issue
       .save()
       .then(data => {
@@ -76,6 +79,17 @@ router
       .then(data => res.json(data))
       .catch(error => next(error))
   })
+
+function getCountAndIncrease () {
+  return Counter.findOneAndUpdate({}, { $inc: { count: 1 } }).then(data => {
+    if (data) {
+      return data.count
+    } else {
+      const newCounter = new Counter()
+      newCounter.save().then(() => getCountAndIncrease())
+    }
+  })
+}
 
 function paginatedResults (model) {
   return async (req, res, next) => {

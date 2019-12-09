@@ -14,10 +14,9 @@ router
   .post('/register', async (req, res, next) => {
     const { email, password } = req.body
     const user = await Users.findOne({ email })
-    console.log('USER: ' + JSON.stringify(user)) // TODO remove later
     if (user) {
-      return res.status(400).json({ error: 'User already exists', user })
-    } // TODO only for debugging! REMOVE sending whole user with password in resp
+      return res.status(400).json({ error: 'User already exists' })
+    }
     const hashedPassword = await hash(password, 10)
     new Users({ email, password: hashedPassword }).save()
     res.json({ message: 'user created' })
@@ -36,7 +35,6 @@ router
       user
         .save()
         .then(data => {
-          console.log(JSON.stringify(data))
           return res.send({ message: 'user updated' })
         })
         .catch(error => res.status(400).json({ error: error }))
@@ -46,12 +44,10 @@ router
   })
   .get('/user/:email', async (req, res, next) => {
     const { email } = req.params
-    console.log("email: " + email)
     const user = await Users.findOne({ email })
-    console.log('USER: ' + JSON.stringify(user)) // TODO remove later
-    if (! user) {
-      return res.status(400).json({ error: 'User not exist' })
-    } // TODO only for debugging! REMOVE sending whole user with password in resp
+    if (!user) {
+      throw new Error('user not found')
+    }
     const { defaultProject, displayName } = user
     res.json({ defaultProject, displayName })
   })
@@ -71,10 +67,10 @@ router
       sendRefreshToken(res, refreshToken)
       sendAccessToken(req, res, accessToken)
     } catch (err) {
-      res.status(400).send({ error: `${err.message}` })
+      next(err)
     }
   })
-  .post('/logout', async (req, res) => {
+  .post('/logout', async (req, res, next) => {
     const { email } = req.body
     try {
       const user = await Users.findOne({ email })
@@ -86,18 +82,7 @@ router
       res.clearCookie(REFRESH_TOKEN_COOKIE, { path: REFRESH_TOKEN_PATH })
       res.send({ message: 'logged out' })
     } catch (err) {
-      res.status(400).json({ error: err.message })
-    }
-  })
-  .get('/protected', async (req, res) => {
-    try {
-      const userId = isAuth(req)
-      console.log('User is authenticated: ' + userId)
-      if (userId !== null) {
-        res.send({ message: 'this is protected data' })
-      }
-    } catch (error) {
-      res.status(401).send({ error: error.message })
+      next(err)
     }
   })
   .post('/refresh_token', async (req, res) => {

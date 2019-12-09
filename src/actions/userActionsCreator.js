@@ -16,7 +16,7 @@ export function handleLogout () {
     api
       .logout(user.email)
       .then(user => dispatch(signOut(user)))
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 }
 
@@ -25,7 +25,7 @@ export function handleUpdate (user) {
     api
       .update(user)
       .then(() => dispatch(update(user)))
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 }
 
@@ -35,7 +35,7 @@ function handleGetUserDetails () {
     api
       .getUserDetails(user.email)
       .then(user => dispatch(update(user)))
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 }
 export function handleRegister (user) {
@@ -43,7 +43,7 @@ export function handleRegister (user) {
     api
       .register(user)
       .then(() => dispatch(update(user)))
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 }
 
@@ -60,7 +60,6 @@ export function handleLogin (user) {
       dispatch(handleReceiveIssues())
       dispatch(handleGetSettings())
       dispatch(hideLoading())
-
     })
   }
 }
@@ -74,6 +73,5 @@ export function handleRestoreSession (user) {
     dispatch(handleReceiveIssues())
     dispatch(handleGetSettings())
     dispatch(hideLoading())
-
   }
 }

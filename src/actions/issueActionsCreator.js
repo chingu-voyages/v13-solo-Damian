@@ -8,7 +8,7 @@ export function handleAddIssue (issue) {
     api
       .createIssue(issue, getState().user.accessToken)
       .then(data => dispatch(addIssue(data)))
-      .catch(error => console.log(JSON.stringify(error)))
+      .catch(error => console.error(JSON.stringify(error)))
   }
 }
 export function handleUpdateIssue (issue) {
@@ -16,7 +16,7 @@ export function handleUpdateIssue (issue) {
     api
       .updateIssue(issue, getState().user.accessToken)
       .then(() => dispatch(updateIssue(issue)))
-      .catch(error => console.log(JSON.stringify(error)))
+      .catch(error => console.error(JSON.stringify(error)))
   }
 }
 export function handleDeleteIssue (issue) {
@@ -27,7 +27,7 @@ export function handleDeleteIssue (issue) {
       .then(() => {
         dispatch(deleteIssue(issue))
       })
-      .catch(error => console.log(JSON.stringify(error)))
+      .catch(error => console.error(JSON.stringify(error)))
   }
 }
 export function handleRetrieveAvailableProjects () {
@@ -42,7 +42,7 @@ export function handleRetrieveAvailableProjects () {
         dispatch(update(user))
         dispatch(hideLoading())
       })
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 }
 
@@ -57,9 +57,9 @@ export function handleReceiveIssues (page, limit, search) {
         ...search
       })
       .then(data => {
-        dispatch(receiveIssues(data));
+        dispatch(receiveIssues(data))
         dispatch(hideLoading())
       })
-      .catch(error => console.log(JSON.stringify(error)))
+      .catch(error => console.error(JSON.stringify(error)))
   }
 }

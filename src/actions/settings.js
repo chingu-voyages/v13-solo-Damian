@@ -17,6 +17,6 @@ export function handleGetSettings () {
         dispatch(getSettings(data))
         return data
       })
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 }

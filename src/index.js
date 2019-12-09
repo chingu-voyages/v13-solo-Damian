@@ -9,6 +9,13 @@ import reducer from './reducers/index'
 import middleware from './middleware/index'
 
 import { BrowserRouter } from 'react-router-dom'
+import * as Sentry from '@sentry/browser'
+const SENTRY_DNS = process.env.SENTRY_DNS
+Sentry.init({
+  dsn: SENTRY_DNS,
+  maxBreadcrumbs: 50
+})
+
 const store = createStore(reducer, middleware)
 
 ReactDOM.render(

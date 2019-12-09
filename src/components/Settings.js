@@ -17,14 +17,11 @@ class Settings extends Component {
   };
   handleSelectChange = selectedOption => {
     this.setState({ defaultProject: selectedOption.value });
-    console.log(`Option selected:`, selectedOption.value);
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(JSON.stringify("handleSubmit " + { ...this.state }));
     this.props.dispatch(handleUpdate({ ...this.state }));
-
     this.props.history.push("/");
   };
 
@@ -110,11 +107,7 @@ class Settings extends Component {
 }
 
 function mapStateToProps({ user }) {
-  console.log("mapStateToProps " + JSON.stringify(user));
-
   const redirect = !(user && user.accessToken);
-  console.log("mapStateToProps: redirect? " + redirect);
-
   return {
     redirect,
     user,

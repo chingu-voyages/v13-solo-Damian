@@ -15,12 +15,15 @@ const SERVER_PORT =
     ? process.env.PORT
     : process.env.SERVER_PORT) || 3030
 const mongoose = require('mongoose')
+const Sentry = require('@sentry/node');
+const SENTRY_DNS = process.env.SENTRY_DNS
+Sentry.init({ dsn: SENTRY_DNS });
 mongoose.set('useFindAndModify', false)
 
 app.use(cors())
 app.use(logger('dev'))
-app.use(express.json()) // support json-encoded body in request
-app.use(express.urlencoded({ extended: false })) // support url encoded bodies in request
+app.use(express.json())
+app.use(express.urlencoded({ extended: false })) 
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 

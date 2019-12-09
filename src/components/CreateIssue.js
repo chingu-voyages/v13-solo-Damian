@@ -30,17 +30,14 @@ class CreateIssue extends Component {
   }
 
   handlePriorityChange = selectedOption => {
-    console.log(JSON.stringify(selectedOption));
     this.setState({ priority: selectedOption.value });
   };
 
   handleStatusChange = selectedOption => {
-    console.log(JSON.stringify(selectedOption));
     this.setState({ status_text: selectedOption.value });
   };
 
   handleProjectChange = selectedOption => {
-    console.log(JSON.stringify(selectedOption));
     this.setState({ project: selectedOption.value });
   };
 
@@ -65,7 +62,6 @@ class CreateIssue extends Component {
   };
 
   handleDelete = e => {
-    console.log("DELETE CLICKED");
     this.props.dispatch(handleDeleteIssue({ ...this.state }));
     this.props.history.push("/");
   };
@@ -85,8 +81,6 @@ class CreateIssue extends Component {
     if (redirect) {
       return <Redirect to="/login" />;
     }
-
-    console.log("ID: >>>> " + JSON.stringify(this.props.issue));
 
     const { priority, status } = this.props.settings;
     const { availableProjects } = this.props.user;

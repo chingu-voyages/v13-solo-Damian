@@ -10,7 +10,6 @@ class Registration extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    console.log(JSON.stringify({ ...this.state }));
     this.props.dispatch(handleRegister({ ...this.state }));
     this.setState({
       email: "",

@@ -8,7 +8,7 @@ export function handleCreateComment (comment) {
     api
       .createComment(comment.issue, comment, user.accessToken)
       .then(comment => dispatch(addComment(comment)))
-      .catch(error => console.log(JSON.stringify(error)))
+      .catch(error => console.error(JSON.stringify(error)))
   }
 }
 
@@ -18,7 +18,7 @@ export function handleDeleteComment (comment) {
     api
       .removeComment(comment._id, user.accessToken)
       .then(() => dispatch(deleteComment(comment)))
-      .catch(error => console.log(JSON.stringify(error)))
+      .catch(error => console.error(JSON.stringify(error)))
   }
 }
 export function handleReceiveComments (ref) {
@@ -32,6 +32,6 @@ export function handleReceiveComments (ref) {
         dispatch(receiveComments(data))
         dispatch(hideLoading())
       })
-      .catch(error => console.log(JSON.stringify(error)))
+      .catch(error => console.error(JSON.stringify(error)))
   }
 }

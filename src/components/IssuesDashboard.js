@@ -36,7 +36,6 @@ class IssuesDashboard extends Component {
   }
   onSubmitSearch = (params) => {
     this.setState({...this.state, searchParams: params})
-    console.log("ON SUBMIT SEARCH: " + JSON.stringify(this.state))
     const { page, limit } = this.state.pagination;
     this.props.dispatch(handleReceiveIssues(page, limit, params));
 

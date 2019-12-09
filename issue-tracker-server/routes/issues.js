@@ -6,7 +6,6 @@ const Comment = require('../models/comment')
 router
   .get('/:project/search', (req, res, next) => {
     const project = req.params.project
-    const query = req.query
     const filter = { ...req.query, project }
     Issue.find(filter)
       .then(result => res.json(result))
@@ -33,7 +32,6 @@ router
   .put('/details/:_id', (req, res, next) => {
     const { _id } = req.params
     const update = { ...req.body }
-    console.log('update: ' + JSON.stringify(update))
     Issue.findByIdAndUpdate(_id, update)
       .then(data => {
         return res.json({ message: data })
@@ -81,19 +79,14 @@ router
 
 function paginatedResults (model) {
   return async (req, res, next) => {
-    console.log('paginatedResults' + JSON.stringify(req.query))
-
     const filter = { ...req.query }
     if (filter.issue_title) {
       const text = filter.issue_title
       filter.issue_title = `/${text}/`
     }
-    console.log('Filter = ' + JSON.stringify(filter))
-
     delete filter.page
     delete filter.limit
     const count = await model.find(filter).countDocuments()
-    console.log('Count ' + count)
     const { limit, page } = req.query
     const startIndex = (page - 1) * limit
     const endIndex = page * limit
@@ -122,8 +115,7 @@ function paginatedResults (model) {
       res.paginatedResults = results
       next()
     } catch (error) {
-      console.log(JSON.stringify(error))
-      next(new Error('Cannot get data from db (T⌓T)'))
+      next(error)
     }
   }
 }

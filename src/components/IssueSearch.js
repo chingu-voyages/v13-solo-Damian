@@ -10,12 +10,10 @@ class IssueSearch extends Component {
   };
 
   handlePriorityChange = selectedOption => {
-    console.log(JSON.stringify(selectedOption));
     this.setState({ priority: selectedOption.value });
   };
 
   handleStatusChange = selectedOption => {
-    console.log(JSON.stringify(selectedOption));
     this.setState({ status_text: selectedOption.value });
   };
   handleOnChange = e => {
@@ -24,9 +22,7 @@ class IssueSearch extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log("Submit search : " + JSON.stringify({ ...this.state }));
     this.props.onSubmitSearch({ ...this.state });
-    // this.props.onSubmitSearch({ ...this.state })
   };
 
   componentDidMount() {

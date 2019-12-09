@@ -14,7 +14,6 @@ class Login extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    console.log(JSON.stringify({ ...this.state }));
     this.props.dispatch(handleLogin({ ...this.state }));
     this.setState({
       email: "",
@@ -32,7 +31,6 @@ class Login extends Component {
 
     if (accessToken && email) {
       this.props.dispatch(handleRestoreSession({ email, accessToken }));
-      // this.props.history.push("/");
     }
   }
   render() {
@@ -83,7 +81,6 @@ class Login extends Component {
 }
 function mapStateToProps({ user }) {
   const redirect = user && user.accessToken;
-  console.log("LOGIN-mapStateToProps: " + redirect);
   return {
     redirect,
   };

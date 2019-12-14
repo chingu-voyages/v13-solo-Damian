@@ -86,6 +86,18 @@ class Settings extends Component {
               value={this.state.email}
             />
           </div>
+          <div className="form-group">
+            <label htmlFor="passwordInput" >Password</label>
+            <input
+              type="password"
+              className="form-control"
+              id="passwordInput"
+              value={this.state.password}
+              name="password"
+              onChange={this.handleOnChange}
+              required
+            />
+          </div>
           <button type="submit" className="btn btn-primary">
             Submit
           </button>

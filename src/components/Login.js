@@ -47,7 +47,7 @@ class Login extends Component {
             <div className="form-group">
               <input
                 name="email"
-                type="text"
+                type="email"
                 className="form-control"
                 id="emailInput"
                 aria-describedby="emailHelp"

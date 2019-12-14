@@ -30,7 +30,7 @@ class Registration extends Component {
             <div className="form-group">
               <input
                 name="email"
-                type="text"
+                type="email"
                 className="form-control"
                 id="inputEmail"
                 aria-describedby="emailHelp"

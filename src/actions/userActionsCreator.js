@@ -14,7 +14,7 @@ export function handleLogout () {
 
     const user = getState().user
     api
-      .logout(user.email)
+      .logout(user)
       .then(user => dispatch(signOut(user)))
       .catch(error => console.error(error))
   }

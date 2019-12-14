@@ -53,6 +53,7 @@ class Login extends Component {
                 aria-describedby="emailHelp"
                 placeholder="Email"
                 value={this.state.email}
+                required
                 onChange={this.handleOnChange}
               />
             </div>
@@ -65,6 +66,7 @@ class Login extends Component {
                 placeholder="Password"
                 value={this.state.password}
                 onChange={this.handleOnChange}
+                required
               />
             </div>
             <button type="submit" className="btn btn-primary">
